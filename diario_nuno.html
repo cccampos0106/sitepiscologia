@@ -1,0 +1,143 @@
+<!DOCTYPE html>
+<html lang="pt">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Prof. Nuno Corte-Real — Catarina Coutinho Campos</title>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400&family=Jost:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  :root { --bg: #f5f0e8; --bg2: #ede7d9; --bg3: #e4dccb; --text: #2c2720; --text-muted: #7a6f62; --accent: #8b6f47; --accent-light: #c4a882; --border: rgba(139,111,71,0.2); --white: #faf7f2; }
+  html { scroll-behavior: smooth; }
+  body { font-family: 'Jost', sans-serif; background: var(--bg); color: var(--text); font-weight: 300; line-height: 1.7; overflow-x: hidden; }
+  nav {
+    position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+    padding: 1rem 2rem; display: flex; justify-content: space-between; align-items: center;
+    background: rgba(245,240,232,0.95); backdrop-filter: blur(10px); border-bottom: 1px solid var(--border);
+  }
+  .nav-logo { font-family: 'Cormorant Garamond', serif; font-size: 1rem; font-weight: 400; letter-spacing: 0.1em; color: var(--text); text-transform: uppercase; text-decoration:none; white-space:nowrap; }
+  .nav-links { display: flex; gap: 1.4rem; list-style: none; flex-wrap: wrap; justify-content: flex-end; align-items: center; }
+  .nav-links a { font-size: 0.65rem; letter-spacing: 0.1em; text-transform: uppercase; color: var(--text-muted); text-decoration: none; transition: color 0.3s; padding-bottom: 2px; border-bottom: 1px solid transparent; white-space: nowrap; }
+  .nav-links a:hover, .nav-links a.active { color: var(--accent); border-bottom-color: var(--accent-light); }
+  .nav-dropdown { position: relative; }
+  .nav-dropdown-btn { font-size: 0.65rem; letter-spacing: 0.1em; text-transform: uppercase; color: var(--text-muted); background: none; border: none; cursor: pointer; padding-bottom: 2px; border-bottom: 1px solid transparent; font-family: 'Jost', sans-serif; font-weight: 300; transition: color 0.3s; white-space: nowrap; display: flex; align-items: center; gap: 0.3rem; }
+  .nav-dropdown-btn:hover, .nav-dropdown-btn.active { color: var(--accent); border-bottom-color: var(--accent-light); }
+  .nav-dropdown-btn .arrow { font-size: 0.5rem; transition: transform 0.3s; }
+  .nav-dropdown.open .arrow { transform: rotate(180deg); }
+  .nav-dropdown-menu { display: none; position: absolute; top: calc(100% + 12px); left: 0; min-width: 210px; background: rgba(245,240,232,0.98); border: 1px solid var(--border); backdrop-filter: blur(10px); z-index: 200; padding: 0.5rem 0; box-shadow: 0 8px 32px rgba(139,111,71,0.12); }
+  .nav-dropdown:hover .nav-dropdown-menu, .nav-dropdown.open .nav-dropdown-menu { display: block; }
+  .nav-dropdown-menu a { display: block; font-size: 0.65rem; letter-spacing: 0.1em; text-transform: uppercase; color: var(--text-muted); text-decoration: none; padding: 0.7rem 1.2rem; transition: background 0.2s, color 0.2s; border-left: 2px solid transparent; white-space: nowrap; }
+  .nav-dropdown-menu a:hover, .nav-dropdown-menu a.active { color: var(--accent); background: var(--bg2); border-left-color: var(--accent-light); }
+  .nav-hamburger { display:none; flex-direction:column; gap:5px; cursor:pointer; flex-shrink:0; }
+  .nav-hamburger span { display:block; width:22px; height:1px; background:var(--accent); }
+  .page-hero { min-height: 50vh; display: flex; align-items: flex-end; padding: 10rem 3rem 4rem; position: relative; overflow: hidden; background: var(--bg3); }
+  .page-hero-bg { position: absolute; top: 50%; left: 3rem; transform: translateY(-50%); font-family: 'Cormorant Garamond', serif; font-size: 14vw; font-weight: 300; color: rgba(139,111,71,0.06); pointer-events: none; user-select: none; white-space: nowrap; }
+  .page-hero-content { max-width: 860px; position: relative; z-index: 1; }
+  .page-hero-tag { font-size: 0.65rem; letter-spacing: 0.28em; text-transform: uppercase; color: var(--accent); display: block; margin-bottom: 1rem; }
+  .page-hero-title { font-family: 'Cormorant Garamond', serif; font-size: clamp(2.2rem, 6vw, 4.5rem); font-weight: 300; line-height: 1.05; color: var(--text); }
+  .page-hero-title em { font-style: italic; color: var(--accent); }
+  .page-hero-line { width: 60px; height: 1px; background: var(--accent-light); margin-top: 2rem; }
+  .content-area { padding: 5rem 3rem; }
+  .content-inner { max-width: 860px; margin: 0 auto; }
+  .back-link { display:inline-flex; align-items:center; gap:0.5rem; font-size:0.68rem; letter-spacing:0.15em; text-transform:uppercase; color:var(--accent); text-decoration:none; margin-bottom:3rem; transition:gap 0.3s; }
+  .back-link:hover { gap:0.8rem; }
+  .timeline { position: relative; padding-left: 2.5rem; }
+  .timeline::before { content:''; position:absolute; left:0; top:0; bottom:0; width:1px; background: linear-gradient(to bottom, var(--accent-light), transparent); }
+  .timeline-entry { position: relative; margin-bottom: 3.5rem; }
+  .timeline-entry::before { content:''; position:absolute; left:-2.5rem; top:0.4rem; width:8px; height:8px; border-radius:50%; background: var(--accent-light); border: 2px solid var(--bg); box-shadow: 0 0 0 3px var(--accent-light); }
+  .timeline-entry-title { font-family: 'Cormorant Garamond', serif; font-size: 1.55rem; font-weight: 400; color: var(--text); margin-bottom: 0.5rem; line-height: 1.2; }
+  .timeline-entry-subtitle { font-size: 0.65rem; letter-spacing: 0.2em; text-transform: uppercase; color: var(--accent); margin-bottom: 1.2rem; display: block; }
+  .timeline-entry-body p { font-size: 0.95rem; color: var(--text-muted); line-height: 1.95; text-indent: 2em; margin-bottom: 1rem; }
+  .highlight-box { background: var(--white); border-left: 3px solid var(--accent-light); padding: 1.5rem 2rem; margin: 2rem 0; font-family: 'Cormorant Garamond', serif; font-style: italic; font-size: 1.2rem; line-height: 1.7; color: var(--text); }
+.reveal { opacity:0; transform:translateY(28px); transition: opacity 0.7s ease, transform 0.7s ease; }
+  .reveal.visible { opacity:1; transform:translateY(0); }
+  footer { background: var(--bg3); border-top: 1px solid var(--border); padding: 2rem 3rem; display: flex; justify-content: space-between; align-items: center; }
+  .footer-name { font-family:'Cormorant Garamond',serif; font-size:0.95rem; font-style:italic; color:var(--text-muted); }
+  .footer-course { font-size:0.65rem; letter-spacing:0.15em; text-transform:uppercase; color:var(--accent-light); }
+  @media(max-width:900px){ nav { padding:1rem 1.5rem; } .nav-links { display:none; flex-direction:column; position:absolute; top:100%; left:0; right:0; background:rgba(245,240,232,0.98); padding:1.5rem; gap:1rem; border-bottom:1px solid var(--border); } .nav-links.open { display:flex; } .nav-hamburger { display:flex; } .nav-dropdown-menu { position:static; box-shadow:none; border:none; border-left:2px solid var(--border); margin-left:1rem; } .page-hero, .content-area { padding-left:1.5rem; padding-right:1.5rem; } footer { flex-direction:column; gap:0.5rem; text-align:center; } }
+</style>
+</head>
+<body>
+<nav>
+  <a class="nav-logo" href="index.html">Catarina Coutinho Campos</a>
+  <ul class="nav-links" id="navMenu">
+    <li><a href="index.html">Início</a></li>
+    <li class="nav-dropdown" id="dd-diario">
+      <button class="nav-dropdown-btn" onclick="toggleDropdown('dd-diario')">Diário de Bordo <span class="arrow">▼</span></button>
+      <div class="nav-dropdown-menu">
+        <a href="diario_mj.html">Prof.ª Maria João Almeida</a>
+        <a href="diario_nuno.html" class="active">Prof. Nuno Corte-Real</a>
+        <a href="diario_reflexao.html">Reflexão Pessoal</a>
+      </div>
+    </li>
+    <li><a href="pesquisas.html">As Minhas Pesquisas</a></li>
+    <li><a href="lider.html">Projeto do Líder</a></li>
+    <li><a href="o_que_levo.html">O Que Levo Comigo</a></li>
+    <li><a href="bibliografia.html">Bibliografia</a></li>
+  </ul>
+  <div class="nav-hamburger" onclick="document.getElementById('navMenu').classList.toggle('open')"><span></span><span></span><span></span></div>
+</nav>
+
+<div class="page-hero">
+  <div class="page-hero-bg">Dinâmicas</div>
+  <div class="page-hero-content">
+    <span class="page-hero-tag">Diário de Bordo · Dinâmicas de Grupo</span>
+    <h1 class="page-hero-title">Prof. Nuno<br><em>Corte-Real</em></h1>
+    <div class="page-hero-line"></div>
+  </div>
+</div>
+
+<div class="content-area">
+  <div class="content-inner">
+    <a class="back-link" href="index.html">← Início</a>
+    <div class="timeline">
+
+      <div class="timeline-entry reveal">
+        <div class="timeline-entry-title">Modelo de Responsabilidade</div>
+        <span class="timeline-entry-subtitle">Dinâmica 01</span>
+        <div class="timeline-entry-body">
+          <p>Ao longo da dinâmica, percebi que ser responsável implica desenvolver autonomia, respeitar os outros e assumir um papel ativo dentro do grupo, contribuindo para o seu bom funcionamento.</p>
+          <p>Uma das ideias que mais me marcou foi a noção de que a ação de cada elemento tem impacto nos restantes membros do grupo. Muitas vezes, tendemos a encarar a responsabilidade como uma característica individual, mas esta atividade mostrou-me que ela possui também uma forte dimensão social, estando diretamente relacionada com a forma como interagimos e colaboramos com os outros.</p>
+          <p>Além disso, compreendi que assumir responsabilidade envolve tomar decisões conscientes e aceitar as consequências dessas escolhas. Esta capacidade torna-se particularmente importante em contexto educativo, onde os alunos devem ser encorajados a participar de forma ativa e a desenvolver progressivamente a sua autonomia.</p>
+          <div class="highlight-box">"Enquanto futura professora, mais do que cumprir tarefas ou seguir instruções, acredito que é fundamental ajudá-los a desenvolver sentido de responsabilidade, consciência das suas ações e capacidade para contribuir positivamente para o ambiente da turma."</div>
+        </div>
+      </div>
+
+      <div class="timeline-entry reveal">
+        <div class="timeline-entry-title">Os 4 Cantos</div>
+        <span class="timeline-entry-subtitle">Dinâmica 02 — Pensamento Crítico e Debate</span>
+        <div class="timeline-entry-body">
+          <p>A dinâmica dos 4 cantos destacou-se pela forma como incentivou a participação ativa de todos os elementos do grupo. Ao sermos convidados a posicionar-nos fisicamente perante diferentes afirmações, fomos também desafiados a refletir sobre as nossas opiniões, a fundamentar as nossas escolhas e a ouvir argumentos diferentes dos nossos.</p>
+          <p>Ao longo da atividade, percebi que a aprendizagem pode tornar-se mais significativa quando os alunos são chamados a pensar, questionar e construir as suas próprias ideias, em vez de assumirem apenas um papel passivo na receção da informação. O facto de não existir necessariamente uma resposta certa ou errada tornou a discussão mais rica e permitiu explorar diferentes perspetivas sobre os temas abordados.</p>
+          <p>Outro aspeto que considerei particularmente interessante foi o contacto com opiniões distintas das minhas. Esta troca de ideias reforçou a importância do respeito pela diversidade de pensamentos e da capacidade de argumentar de forma fundamentada, competências que considero essenciais tanto no contexto escolar como na vida em sociedade.</p>
+          <div class="highlight-box">"Acredito que criar oportunidades para que os alunos expressem as suas opiniões, debatam ideias e justifiquem os seus pontos de vista contribui não só para a aprendizagem dos conteúdos, mas também para o desenvolvimento de competências pessoais e sociais fundamentais."</div>
+        </div>
+      </div>
+
+      <div class="timeline-entry reveal">
+        <div class="timeline-entry-title">Quem Tenho à Minha Frente?</div>
+        <span class="timeline-entry-subtitle">Dinâmica 03 — Coesão e Pertença ao Grupo</span>
+        <div class="timeline-entry-body">
+          <p>A constante rotação entre elementos do grupo permitiu estabelecer várias interações num curto espaço de tempo, criando oportunidades para conhecer diferentes pessoas e partilhar experiências de forma descontraída.</p>
+          <p>O que mais valorizei nesta dinâmica foi precisamente a facilidade com que promoveu a comunicação entre todos. Muitas vezes, no início de um grupo, existe alguma tendência para interagir apenas com pessoas já conhecidas. No entanto, esta atividade incentivou-nos a sair dessa zona de conforto e a estabelecer contacto com colegas com quem, provavelmente, não teríamos conversado de forma espontânea.</p>
+          <p>Além disso, considerei que este tipo de estratégia contribui para a criação de um ambiente mais acolhedor e inclusivo, onde todos têm a oportunidade de se apresentar, de ser ouvidos e de participar ativamente. Pequenos momentos como este podem desempenhar um papel importante na construção de relações interpessoais positivas e no desenvolvimento do sentimento de pertença ao grupo.</p>
+          <p>Esta atividade fez-me refletir sobre a importância de dedicar tempo à criação de um clima relacional positivo. Antes de promover aprendizagens significativas, é fundamental que os alunos se sintam confortáveis, integrados e seguros no grupo de que fazem parte. Nesse sentido, estratégias simples de interação podem revelar-se ferramentas muito eficazes para fortalecer a coesão e a confiança entre os alunos.</p>
+        </div>
+      </div>
+
+    </div>
+</div>
+</div>
+
+<footer>
+  <div class="footer-name">Catarina Coutinho Campos</div>
+  <div class="footer-course">Mestrado em Ensino de Educação Física · FADEUP · 2024 / 2025</div>
+</footer>
+<script>
+function toggleDropdown(id) { document.getElementById(id).classList.toggle('open'); }
+document.addEventListener('click', function(e) { if (!e.target.closest('.nav-dropdown')) document.querySelectorAll('.nav-dropdown').forEach(d => d.classList.remove('open')); });
+const observer = new IntersectionObserver((entries) => { entries.forEach((e, i) => { if(e.isIntersecting) setTimeout(() => e.target.classList.add('visible'), i * 80); }); }, { threshold: 0.08 });
+document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
+</script>
+</body>
+</html>

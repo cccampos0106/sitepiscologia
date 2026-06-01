@@ -1,0 +1,284 @@
+<!DOCTYPE html>
+<html lang="pt">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>As Minhas Pesquisas — Catarina Coutinho Campos</title>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400&family=Jost:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  :root {
+    --bg: #f5f0e8; --bg2: #ede7d9; --bg3: #e4dccb;
+    --text: #2c2720; --text-muted: #7a6f62;
+    --accent: #8b6f47; --accent-light: #c4a882;
+    --border: rgba(139,111,71,0.2); --white: #faf7f2;
+  }
+  html { scroll-behavior: smooth; }
+  body { font-family: 'Jost', sans-serif; background: var(--bg); color: var(--text); font-weight: 300; line-height: 1.7; overflow-x: hidden; }
+
+  nav {
+    position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+    padding: 1rem 2rem; display: flex; justify-content: space-between; align-items: center;
+    background: rgba(245,240,232,0.95); backdrop-filter: blur(10px); border-bottom: 1px solid var(--border);
+  }
+  .nav-logo { font-family: 'Cormorant Garamond', serif; font-size: 1rem; font-weight: 400; letter-spacing: 0.1em; color: var(--text); text-transform: uppercase; text-decoration:none; white-space:nowrap; }
+  .nav-links { display: flex; gap: 1.4rem; list-style: none; flex-wrap: wrap; justify-content: flex-end; align-items: center; }
+  .nav-links a { font-size: 0.65rem; letter-spacing: 0.1em; text-transform: uppercase; color: var(--text-muted); text-decoration: none; transition: color 0.3s; padding-bottom: 2px; border-bottom: 1px solid transparent; white-space: nowrap; }
+  .nav-links a:hover, .nav-links a.active { color: var(--accent); border-bottom-color: var(--accent-light); }
+  .nav-dropdown { position: relative; }
+  .nav-dropdown-btn { font-size: 0.65rem; letter-spacing: 0.1em; text-transform: uppercase; color: var(--text-muted); background: none; border: none; cursor: pointer; padding-bottom: 2px; border-bottom: 1px solid transparent; font-family: 'Jost', sans-serif; font-weight: 300; transition: color 0.3s; white-space: nowrap; display: flex; align-items: center; gap: 0.3rem; }
+  .nav-dropdown-btn:hover, .nav-dropdown-btn.active { color: var(--accent); border-bottom-color: var(--accent-light); }
+  .nav-dropdown-btn .arrow { font-size: 0.5rem; transition: transform 0.3s; }
+  .nav-dropdown.open .arrow { transform: rotate(180deg); }
+  .nav-dropdown-menu { display: none; position: absolute; top: calc(100% + 12px); left: 0; min-width: 210px; background: rgba(245,240,232,0.98); border: 1px solid var(--border); backdrop-filter: blur(10px); z-index: 200; padding: 0.5rem 0; box-shadow: 0 8px 32px rgba(139,111,71,0.12); }
+  .nav-dropdown:hover .nav-dropdown-menu, .nav-dropdown.open .nav-dropdown-menu { display: block; }
+  .nav-dropdown-menu a { display: block; font-size: 0.65rem; letter-spacing: 0.1em; text-transform: uppercase; color: var(--text-muted); text-decoration: none; padding: 0.7rem 1.2rem; transition: background 0.2s, color 0.2s; border-left: 2px solid transparent; white-space: nowrap; }
+  .nav-dropdown-menu a:hover, .nav-dropdown-menu a.active { color: var(--accent); background: var(--bg2); border-left-color: var(--accent-light); }
+  .nav-hamburger { display:none; flex-direction:column; gap:5px; cursor:pointer; flex-shrink:0; }
+  .nav-hamburger span { display:block; width:22px; height:1px; background:var(--accent); }
+
+  .page-hero {
+    min-height: 50vh; display: flex; align-items: flex-end;
+    padding: 10rem 3rem 4rem; position: relative; overflow: hidden;
+    background: var(--bg3);
+  }
+  .page-hero-bg {
+    position: absolute; top: 50%; left: 3rem; transform: translateY(-50%);
+    font-family: 'Cormorant Garamond', serif; font-size: 14vw; font-weight: 300;
+    color: rgba(139,111,71,0.07); pointer-events: none; user-select: none;
+    
+  }
+  .page-hero-content { max-width: 860px; position: relative; z-index: 1; }
+  .page-hero-tag { font-size: 0.65rem; letter-spacing: 0.28em; text-transform: uppercase; color: var(--accent); display: block; margin-bottom: 1rem; }
+  .page-hero-title { font-family: 'Cormorant Garamond', serif; font-size: clamp(2.5rem, 7vw, 5rem); font-weight: 300; line-height: 1.05; color: var(--text); }
+  .page-hero-title em { font-style: italic; color: var(--accent); }
+  .page-hero-line { width: 60px; height: 1px; background: var(--accent-light); margin-top: 2rem; }
+
+  .content-area { padding: 5rem 3rem; }
+  .content-inner { max-width: 900px; margin: 0 auto; }
+  .back-link { display:inline-flex; align-items:center; gap:0.5rem; font-size:0.68rem; letter-spacing:0.15em; text-transform:uppercase; color:var(--accent); text-decoration:none; margin-bottom:3rem; transition:gap 0.3s; }
+  .back-link:hover { gap:0.8rem; }
+
+  /* RESEARCH CARDS */
+  .research-block {
+    display: grid; grid-template-columns: 1fr 1.5fr; gap: 0;
+    border: 1px solid var(--border); margin-bottom: 4rem; background: var(--white);
+    overflow: hidden; transition: box-shadow 0.3s;
+  }
+  .research-block:hover { box-shadow: 0 20px 60px rgba(139,111,71,0.1); }
+  .research-block:nth-child(even) { grid-template-columns: 1.5fr 1fr; direction: rtl; }
+  .research-block:nth-child(even) > * { direction: ltr; }
+
+  .research-num-panel {
+    background: var(--accent); display: flex; flex-direction: column;
+    justify-content: space-between; padding: 3rem 2.5rem;
+    min-height: 400px;
+  }
+  .research-big-num {
+    font-family: 'Cormorant Garamond', serif; font-size: 6rem; font-weight: 300;
+    color: rgba(255,255,255,0.2); line-height: 1; letter-spacing: -0.05em;
+  }
+  .research-num-label {
+    font-size: 0.65rem; letter-spacing: 0.22em; text-transform: uppercase;
+    color: rgba(255,255,255,0.7);
+  }
+  .research-num-title {
+    font-family: 'Cormorant Garamond', serif; font-size: 1.8rem; font-weight: 300;
+    color: var(--white); line-height: 1.2; margin-top: 0.5rem;
+  }
+
+  .research-body { padding: 3rem; }
+  .research-why {
+    font-size: 0.65rem; letter-spacing: 0.2em; text-transform: uppercase;
+    color: var(--accent); margin-bottom: 0.8rem; display: block;
+  }
+  .research-section-title {
+    font-family: 'Cormorant Garamond', serif; font-size: 1.25rem; font-weight: 400;
+    color: var(--text); margin-bottom: 0.8rem; margin-top: 1.8rem;
+  }
+  .research-section-title:first-of-type { margin-top: 0; }
+  .research-text { font-size: 0.9rem; color: var(--text-muted); line-height: 1.9; text-indent: 2em; }
+  .research-text + .research-text { margin-top: 0.8rem; }
+
+  .research-video {
+    margin-top: 2rem; background: var(--bg2); padding: 1.5rem;
+    border-left: 3px solid var(--accent-light);
+  }
+  .research-video-label { font-size: 0.62rem; letter-spacing: 0.2em; text-transform: uppercase; color: var(--accent); display: block; margin-bottom: 0.8rem; }
+  .video-wrapper { position: relative; padding-bottom: 56.25%; height: 0; overflow: hidden; }
+  .video-wrapper iframe { position: absolute; top: 0; left: 0; width: 100%; height: 100%; border: none; }
+
+  .reveal { opacity:0; transform:translateY(28px); transition: opacity 0.7s ease, transform 0.7s ease; }
+  .reveal.visible { opacity:1; transform:translateY(0); }
+
+  footer { background: var(--bg3); border-top: 1px solid var(--border); padding: 2rem 3rem; display: flex; justify-content: space-between; align-items: center; }
+  .footer-name { font-family:'Cormorant Garamond',serif; font-size:0.95rem; font-style:italic; color:var(--text-muted); }
+  .footer-course { font-size:0.65rem; letter-spacing:0.15em; text-transform:uppercase; color:var(--accent-light); }
+
+  @media(max-width:768px){
+    nav { padding:1rem 1.5rem; }
+    .nav-links { display:none; flex-direction:column; position:absolute; top:100%; left:0; right:0; background:rgba(245,240,232,0.97); padding:1.5rem; gap:1rem; border-bottom:1px solid var(--border); }
+    .nav-links.open { display:flex; }
+    .nav-dropdown { position: relative; }
+  .nav-dropdown-btn { font-size: 0.65rem; letter-spacing: 0.1em; text-transform: uppercase; color: var(--text-muted); background: none; border: none; cursor: pointer; padding-bottom: 2px; border-bottom: 1px solid transparent; font-family: 'Jost', sans-serif; font-weight: 300; transition: color 0.3s; white-space: nowrap; display: flex; align-items: center; gap: 0.3rem; }
+  .nav-dropdown-btn:hover { color: var(--accent); border-bottom-color: var(--accent-light); }
+  .nav-dropdown-btn .arrow { font-size: 0.5rem; transition: transform 0.3s; }
+  .nav-dropdown.open .arrow { transform: rotate(180deg); }
+  .nav-dropdown-menu { display: none; position: absolute; top: calc(100% + 12px); left: 0; min-width: 200px; background: rgba(245,240,232,0.98); border: 1px solid var(--border); backdrop-filter: blur(10px); z-index: 200; padding: 0.5rem 0; box-shadow: 0 8px 32px rgba(139,111,71,0.12); }
+  .nav-dropdown:hover .nav-dropdown-menu, .nav-dropdown.open .nav-dropdown-menu { display: block; }
+  .nav-dropdown-menu a { display: block; font-size: 0.65rem; letter-spacing: 0.1em; text-transform: uppercase; color: var(--text-muted); text-decoration: none; padding: 0.7rem 1.2rem; transition: background 0.2s, color 0.2s; border-left: 2px solid transparent; white-space: nowrap; }
+  .nav-dropdown-menu a:hover, .nav-dropdown-menu a.active { color: var(--accent); background: var(--bg2); border-left-color: var(--accent-light); }
+  .nav-hamburger { display:flex; }
+    .page-hero, .content-area { padding-left:1.5rem; padding-right:1.5rem; }
+    .research-block, .research-block:nth-child(even) { grid-template-columns: 1fr; direction: ltr; }
+    .research-num-panel { min-height: 200px; }
+    footer { flex-direction:column; gap:0.5rem; text-align:center; }
+  }
+</style>
+</head>
+<body>
+
+<nav>
+  <a class="nav-logo" href="index.html">Catarina Coutinho Campos</a>
+  <ul class="nav-links" id="navMenu">
+    <li><a href="index.html">Início</a></li>
+    <li class="nav-dropdown" id="dd-diario">
+      <button class="nav-dropdown-btn" onclick="toggleDropdown('dd-diario')">Diário de Bordo <span class="arrow">▼</span></button>
+      <div class="nav-dropdown-menu">
+        <a href="diario_mj.html">Prof.ª Maria João Almeida</a>
+        <a href="diario_nuno.html">Prof. Nuno Corte-Real</a>
+        <a href="diario_reflexao.html">Reflexão Pessoal</a>
+      </div>
+    </li>
+    <li><a href="pesquisas.html"class='active'>As Minhas Pesquisas</a></li>
+    <li><a href="lider.html">Projeto do Líder</a></li>
+    <li><a href="o_que_levo.html">O Que Levo Comigo</a></li>
+    <li><a href="bibliografia.html">Bibliografia</a></li>
+  </ul>
+  <div class="nav-hamburger" id="hamburger" onclick="document.getElementById('navMenu').classList.toggle('open')">
+    <span></span><span></span><span></span>
+  </div>
+</nav>
+
+<div class="page-hero">
+  <div class="page-hero-bg">Pesquisas</div>
+  <div class="page-hero-content">
+    <span class="page-hero-tag">Investigação · Psicologia da Educação</span>
+    <h1 class="page-hero-title">As Minhas<br><em>Pesquisas</em></h1>
+    <div class="page-hero-line"></div>
+  </div>
+</div>
+
+<div class="content-area">
+  <div class="content-inner">
+    <a class="back-link" href="index.html">← Início</a>
+
+    <!-- PESQUISA 1 -->
+    <div class="research-block reveal">
+      <div class="research-num-panel">
+        <div class="research-big-num">01</div>
+        <div>
+          <span class="research-num-label">Tema de Investigação</span>
+          <div class="research-num-title">A Síndrome do Impostor na formação de professores</div>
+        </div>
+      </div>
+      <div class="research-body">
+        <span class="research-why">Porque escolhi este tema?</span>
+        <p class="research-text">Ao longo do percurso académico, muitos estudantes experienciam momentos de dúvida relativamente às suas capacidades. No caso da formação de professores, estas dúvidas podem tornar-se ainda mais evidentes devido à responsabilidade associada à gestão de uma turma.</p>
+
+        <div class="research-section-title">O que é a Síndrome do Impostor?</div>
+        <p class="research-text">A Síndrome do Impostor caracteriza-se pela dificuldade em reconhecer o próprio mérito e as próprias competências, mesmo quando existem evidências objetivas de sucesso. As pessoas que experienciam este fenómeno tendem a atribuir as suas conquistas à sorte, vivendo com receio de falhar ou de serem "descobertas" como menos competentes do que aparentam ser.</p>
+
+        <div class="research-section-title">Na Formação de Professores</div>
+        <p class="research-text">Durante a formação inicial, é natural que os futuros professores sintam insegurança perante novos desafios, como lecionar aulas, gerir comportamentos ou responder às necessidades dos alunos. Muitas vezes, mesmo quando as aulas decorrem de forma positiva, o sucesso é atribuído ao acaso em vez de ser reconhecido como resultado do trabalho realizado.</p>
+
+        <div class="research-section-title">Reflexão Pessoal</div>
+        <p class="research-text">Esta pesquisa permitiu-me perceber que sentir dúvidas ou insegurança não significa falta de competência. Pelo contrário, muitas vezes representa a consciência da responsabilidade associada à profissão docente. O crescimento profissional implica aceitar a existência de desafios sem permitir que a insegurança limite a confiança necessária para os enfrentar.</p>
+
+        <div class="research-video">
+          <span class="research-video-label">▶ Vídeo de Referência</span>
+          <div class="video-wrapper">
+            <iframe src="https://www.youtube.com/embed/ZQUxL4Jm1Lo" allowfullscreen loading="lazy"></iframe>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- PESQUISA 2 -->
+    <div class="research-block reveal">
+      <div class="research-num-panel">
+        <div class="research-big-num">02</div>
+        <div>
+          <span class="research-num-label">Tema de Investigação</span>
+          <div class="research-num-title">Segurança Psicológica na Sala de Aula</div>
+        </div>
+      </div>
+      <div class="research-body">
+        <span class="research-why">Porque escolhi este tema?</span>
+        <p class="research-text">Ao refletir sobre a participação dos alunos nas aulas, apercebi-me de que nem sempre a falta de envolvimento está relacionada com falta de interesse ou motivação. Muitas vezes, os alunos evitam participar porque receiam errar, ser julgados pelos colegas ou expor as suas dificuldades.</p>
+
+        <div class="research-section-title">O que é a Segurança Psicológica?</div>
+        <p class="research-text">A segurança psicológica refere-se à perceção de que um indivíduo pode expressar ideias, colocar dúvidas, cometer erros e participar sem receio de ser ridicularizado ou penalizado. Quando existe segurança psicológica, os alunos sentem-se mais confiantes para experimentar, participar e aprender.</p>
+
+        <div class="research-section-title">Relação com a Educação Física</div>
+        <p class="research-text">Na Educação Física, este conceito torna-se particularmente importante devido à elevada exposição dos alunos perante os colegas. Muitas tarefas implicam demonstrações motoras públicas, comparação de desempenhos e contacto direto com o grupo. Para alguns alunos, especialmente aqueles com menor confiança ou competência motora, esta exposição pode gerar ansiedade e receio de falhar.</p>
+
+        <div class="research-section-title">Reflexão Pessoal</div>
+        <p class="research-text">Esta pesquisa permitiu-me compreender que uma das funções do professor consiste em criar um ambiente seguro para a aprendizagem. Enquanto futura professora, pretendo promover um clima em que os alunos sintam que o erro faz parte do processo de aprendizagem e que todos têm direito a participar sem receio de serem julgados.</p>
+
+        <div class="research-video">
+          <span class="research-video-label">▶ Vídeo de Referência</span>
+          <div class="video-wrapper">
+            <iframe src="https://www.youtube.com/embed/Gsk9JDPn_8Y" allowfullscreen loading="lazy"></iframe>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- PESQUISA 3 -->
+    <div class="research-block reveal">
+      <div class="research-num-panel">
+        <div class="research-big-num">03</div>
+        <div>
+          <span class="research-num-label">Tema de Investigação</span>
+          <div class="research-num-title">O Efeito Pigmaleão: Expectativas do Professor</div>
+        </div>
+      </div>
+      <div class="research-body">
+        <span class="research-why">Porque escolhi este tema?</span>
+        <p class="research-text">Ao longo das aulas de Psicologia da Educação, compreendi que o comportamento dos alunos não depende apenas das suas capacidades individuais, mas também das influências exercidas pelo contexto em que estão inseridos. Despertou-me particular interesse o Efeito Pigmaleão, uma teoria que demonstra como as expectativas dos professores podem influenciar o desempenho dos alunos.</p>
+
+        <div class="research-section-title">O que é o Efeito Pigmaleão?</div>
+        <p class="research-text">O Efeito Pigmaleão surgiu a partir dos estudos de Rosenthal e Jacobson (1968), que demonstraram que as expectativas dos professores podem afetar positiva ou negativamente o rendimento dos alunos. Quando um professor acredita que determinado aluno possui potencial para aprender e evoluir, tende a proporcionar-lhe mais oportunidades de participação, mais apoio e maior confiança.</p>
+        <p class="research-text">Por outro lado, expectativas negativas podem levar a uma diminuição da participação e da confiança dos alunos, influenciando negativamente o seu desempenho.</p>
+
+        <div class="research-section-title">Reflexão Pessoal</div>
+        <p class="research-text">Esta temática levou-me a refletir sobre a importância de tratar todos os alunos de forma equitativa. Enquanto futura professora de Educação Física, pretendo evitar criar expectativas diferenciadas com base no desempenho inicial dos alunos, procurando transmitir confiança e oportunidades de aprendizagem a todos.</p>
+
+        <div class="research-video">
+          <span class="research-video-label">▶ Vídeo de Referência</span>
+          <div class="video-wrapper">
+            <iframe src="https://www.youtube.com/embed/4aN5TbGW5JA" allowfullscreen loading="lazy"></iframe>
+          </div>
+        </div>
+      </div>
+    </div>
+
+  </div>
+</div>
+
+<footer>
+  <div class="footer-name">Catarina Coutinho Campos</div>
+  <div class="footer-course">Mestrado em Ensino de Educação Física · FADEUP · 2024 / 2025</div>
+</footer>
+
+<script>
+const observer = new IntersectionObserver((entries) => {
+  entries.forEach((e, i) => {
+    if(e.isIntersecting) setTimeout(() => e.target.classList.add('visible'), i * 100);
+  });
+}, { threshold: 0.05 });
+document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
+</script>
+</body>
+</html>

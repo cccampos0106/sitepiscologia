@@ -1,0 +1,207 @@
+<!DOCTYPE html>
+<html lang="pt">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Catarina Coutinho Campos — Início</title>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400&family=Jost:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  :root {
+    --bg: #f5f0e8; --bg2: #ede7d9; --bg3: #e4dccb;
+    --text: #2c2720; --text-muted: #7a6f62;
+    --accent: #8b6f47; --accent-light: #c4a882;
+    --border: rgba(139,111,71,0.2); --white: #faf7f2;
+  }
+  html { scroll-behavior: smooth; }
+  body { font-family: 'Jost', sans-serif; background: var(--bg); color: var(--text); font-weight: 300; line-height: 1.7; overflow-x: hidden; }
+  nav {
+    position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+    padding: 1rem 2rem; display: flex; justify-content: space-between; align-items: center;
+    background: rgba(245,240,232,0.95); backdrop-filter: blur(10px); border-bottom: 1px solid var(--border);
+  }
+  .nav-logo { font-family: 'Cormorant Garamond', serif; font-size: 1rem; font-weight: 400; letter-spacing: 0.1em; color: var(--text); text-transform: uppercase; text-decoration:none; white-space:nowrap; }
+  .nav-links { display: flex; gap: 1.4rem; list-style: none; flex-wrap: wrap; justify-content: flex-end; align-items: center; }
+  .nav-links a { font-size: 0.65rem; letter-spacing: 0.1em; text-transform: uppercase; color: var(--text-muted); text-decoration: none; transition: color 0.3s; padding-bottom: 2px; border-bottom: 1px solid transparent; white-space: nowrap; }
+  .nav-links a:hover, .nav-links a.active { color: var(--accent); border-bottom-color: var(--accent-light); }
+  .nav-dropdown { position: relative; }
+  .nav-dropdown-btn { font-size: 0.65rem; letter-spacing: 0.1em; text-transform: uppercase; color: var(--text-muted); background: none; border: none; cursor: pointer; padding-bottom: 2px; border-bottom: 1px solid transparent; font-family: 'Jost', sans-serif; font-weight: 300; transition: color 0.3s; white-space: nowrap; display: flex; align-items: center; gap: 0.3rem; }
+  .nav-dropdown-btn:hover, .nav-dropdown-btn.active { color: var(--accent); border-bottom-color: var(--accent-light); }
+  .nav-dropdown-btn .arrow { font-size: 0.5rem; transition: transform 0.3s; }
+  .nav-dropdown.open .arrow { transform: rotate(180deg); }
+  .nav-dropdown-menu { display: none; position: absolute; top: calc(100% + 12px); left: 0; min-width: 210px; background: rgba(245,240,232,0.98); border: 1px solid var(--border); backdrop-filter: blur(10px); z-index: 200; padding: 0.5rem 0; box-shadow: 0 8px 32px rgba(139,111,71,0.12); }
+  .nav-dropdown:hover .nav-dropdown-menu, .nav-dropdown.open .nav-dropdown-menu { display: block; }
+  .nav-dropdown-menu a { display: block; font-size: 0.65rem; letter-spacing: 0.1em; text-transform: uppercase; color: var(--text-muted); text-decoration: none; padding: 0.7rem 1.2rem; transition: background 0.2s, color 0.2s; border-left: 2px solid transparent; white-space: nowrap; }
+  .nav-dropdown-menu a:hover, .nav-dropdown-menu a.active { color: var(--accent); background: var(--bg2); border-left-color: var(--accent-light); }
+  .nav-hamburger { display:none; flex-direction:column; gap:5px; cursor:pointer; flex-shrink:0; }
+  .nav-hamburger span { display:block; width:22px; height:1px; background:var(--accent); }
+  section { padding: 6rem 3rem; }
+  .section-inner { max-width: 860px; margin: 0 auto; }
+  .section-header { display: flex; align-items: baseline; gap: 1.5rem; margin-bottom: 3.5rem; }
+  .section-num { font-family: 'Cormorant Garamond', serif; font-size: 0.9rem; font-style: italic; color: var(--accent-light); }
+  .section-title { font-family: 'Cormorant Garamond', serif; font-size: clamp(1.8rem, 4vw, 2.8rem); font-weight: 300; color: var(--text); letter-spacing: -0.01em; }
+  .section-line { width: 40px; height: 1px; background: var(--accent-light); margin: 2rem 0; }
+  #sobre { background: var(--bg2); }
+  .about-grid { display: grid; grid-template-columns: 1fr 1.6fr; gap: 5rem; align-items: start; }
+  .about-left { position: sticky; top: 8rem; }
+  .about-caption { font-size: 0.68rem; letter-spacing: 0.18em; text-transform: uppercase; color: var(--accent); margin-top: 1rem; }
+  .about-text p { font-size: 0.97rem; color: var(--text-muted); line-height: 1.95; margin-bottom: 1.5rem; text-indent: 2em; }
+  .about-text p:first-child::first-letter {
+    font-family: 'Cormorant Garamond', serif; font-size: 3.5rem; font-weight: 300; float: left;
+    line-height: 0.85; margin-right: 0.15rem; color: var(--accent); font-style: italic;
+  }
+  .about-text p:first-child { text-indent: 0; }
+  .about-tags { display: flex; flex-wrap: wrap; gap: 0.6rem; margin-top: 2rem; }
+  .tag { font-size: 0.65rem; letter-spacing: 0.15em; text-transform: uppercase; padding: 0.4rem 0.9rem; border: 1px solid var(--border); color: var(--accent); background: var(--white); transition: all 0.3s; }
+  .tag:hover { background: var(--accent); color: var(--white); }
+  #navegar { background: var(--bg); }
+  .pages-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 1.2rem; }
+  .page-card { background: var(--white); border: 1px solid var(--border); padding: 2rem 1.75rem; text-decoration: none; color: var(--text); transition: transform 0.3s, box-shadow 0.3s; position: relative; overflow: hidden; }
+  .page-card::before { content:''; position:absolute; bottom:0; left:0; right:0; height:2px; background: var(--accent-light); transform: scaleX(0); transform-origin: left; transition: transform 0.4s ease; }
+  .page-card:hover { transform: translateY(-4px); box-shadow: 0 16px 48px rgba(139,111,71,0.12); }
+  .page-card:hover::before { transform: scaleX(1); }
+  .page-card-num { font-family:'Cormorant Garamond',serif; font-size:0.8rem; font-style:italic; color:var(--accent-light); display:block; margin-bottom:0.8rem; }
+  .page-card-title { font-family:'Cormorant Garamond',serif; font-size:1.4rem; font-weight:400; color:var(--text); line-height:1.25; margin-bottom:0.6rem; }
+  .page-card-desc { font-size:0.82rem; color:var(--text-muted); line-height:1.7; }
+  .page-card-arrow { position:absolute; bottom:1.5rem; right:1.75rem; font-size:1.1rem; color:var(--accent-light); transition:transform 0.3s; }
+  .page-card:hover .page-card-arrow { transform: translate(4px,-4px); }
+  footer { background: var(--bg3); border-top: 1px solid var(--border); padding: 2rem 3rem; display: flex; justify-content: space-between; align-items: center; }
+  .footer-name { font-family:'Cormorant Garamond',serif; font-size:0.95rem; font-style:italic; color:var(--text-muted); }
+  .footer-course { font-size:0.65rem; letter-spacing:0.15em; text-transform:uppercase; color:var(--accent-light); }
+  .reveal { opacity:0; transform:translateY(32px); transition: opacity 0.7s ease, transform 0.7s ease; }
+  .reveal.visible { opacity:1; transform:translateY(0); }
+  @media(max-width:900px){
+    nav { padding:1rem 1.5rem; }
+    .nav-links { display:none; flex-direction:column; position:absolute; top:100%; left:0; right:0; background:rgba(245,240,232,0.98); padding:1.5rem; gap:1rem; border-bottom:1px solid var(--border); }
+    .nav-links.open { display:flex; }
+    .nav-dropdown { position: relative; }
+  .nav-dropdown-btn { font-size: 0.65rem; letter-spacing: 0.1em; text-transform: uppercase; color: var(--text-muted); background: none; border: none; cursor: pointer; padding-bottom: 2px; border-bottom: 1px solid transparent; font-family: 'Jost', sans-serif; font-weight: 300; transition: color 0.3s; white-space: nowrap; display: flex; align-items: center; gap: 0.3rem; }
+  .nav-dropdown-btn:hover { color: var(--accent); border-bottom-color: var(--accent-light); }
+  .nav-dropdown-btn .arrow { font-size: 0.5rem; transition: transform 0.3s; }
+  .nav-dropdown.open .arrow { transform: rotate(180deg); }
+  .nav-dropdown-menu { display: none; position: absolute; top: calc(100% + 12px); left: 0; min-width: 200px; background: rgba(245,240,232,0.98); border: 1px solid var(--border); backdrop-filter: blur(10px); z-index: 200; padding: 0.5rem 0; box-shadow: 0 8px 32px rgba(139,111,71,0.12); }
+  .nav-dropdown:hover .nav-dropdown-menu, .nav-dropdown.open .nav-dropdown-menu { display: block; }
+  .nav-dropdown-menu a { display: block; font-size: 0.65rem; letter-spacing: 0.1em; text-transform: uppercase; color: var(--text-muted); text-decoration: none; padding: 0.7rem 1.2rem; transition: background 0.2s, color 0.2s; border-left: 2px solid transparent; white-space: nowrap; }
+  .nav-dropdown-menu a:hover, .nav-dropdown-menu a.active { color: var(--accent); background: var(--bg2); border-left-color: var(--accent-light); }
+  .nav-hamburger { display:flex; }
+    section { padding-left:1.5rem; padding-right:1.5rem; }
+    .about-grid { grid-template-columns:1fr; gap:2.5rem; }
+    .about-left { position:static; }
+    footer { flex-direction:column; gap:0.5rem; text-align:center; }
+  }
+</style>
+</head>
+<body>
+<nav>
+  <a class="nav-logo" href="index.html">Catarina Coutinho Campos</a>
+  <ul class="nav-links" id="navMenu">
+    <li><a href="index.html"class='active'>Início</a></li>
+    <li class="nav-dropdown" id="dd-diario">
+      <button class="nav-dropdown-btn" onclick="toggleDropdown('dd-diario')">Diário de Bordo <span class="arrow">▼</span></button>
+      <div class="nav-dropdown-menu">
+        <a href="diario_mj.html">Prof.ª Maria João Almeida</a>
+        <a href="diario_nuno.html">Prof. Nuno Corte-Real</a>
+        <a href="diario_reflexao.html">Reflexão Pessoal</a>
+      </div>
+    </li>
+    <li><a href="pesquisas.html">As Minhas Pesquisas</a></li>
+    <li><a href="lider.html">Projeto do Líder</a></li>
+    <li><a href="o_que_levo.html">O Que Levo Comigo</a></li>
+    <li><a href="bibliografia.html">Bibliografia</a></li>
+  </ul>
+  <div class="nav-hamburger" onclick="document.getElementById('navMenu').classList.toggle('open')">
+    <span></span><span></span><span></span>
+  </div>
+</nav>
+
+<section id="sobre" style="padding-top: 8rem;">
+  <div class="section-inner">
+    <div class="section-header reveal">
+      <span class="section-num">01</span>
+      <h2 class="section-title">Sobre Mim</h2>
+    </div>
+    <div class="about-grid">
+      <div class="about-left reveal">
+        <img src="https://raw.githubusercontent.com/cccampos0106/sitepsico/main/foto.jpg" alt="Catarina Coutinho Campos" style="width:100%; aspect-ratio:3/4; object-fit:cover; border:1px solid var(--border);">
+        <div class="about-caption">Catarina Coutinho Campos · 21 anos · Vila Nova de Gaia</div>
+        <div class="section-line"></div>
+        <div class="about-tags">
+          <span class="tag">Educação Física</span>
+          <span class="tag">Natação</span>
+          <span class="tag">Ginástica</span>
+          <span class="tag">Treino Funcional</span>
+          <span class="tag">Pedagogia</span>
+        </div>
+      </div>
+      <div class="about-text reveal">
+        <p>O meu nome é Catarina Campos, tenho 21 anos e resido em Vila Nova de Gaia. Sou estudante do Mestrado em Ensino da Educação Física, nos Ensinos Básico e Secundário, na Faculdade de Desporto da Universidade do Porto, faculdade onde concluí a minha licenciatura, no ramo do Exercício e Saúde.</p>
+        <p>O desporto acompanha-me desde cedo e foi, desde sempre, uma certeza para mim. A frase "quero ser professora de educação física" anda lado a lado comigo desde o meu 5.º ano de escolaridade. O desporto tem, sem dúvida, desempenhado um papel imprescindível no meu crescimento pessoal e profissional.</p>
+        <p>Durante vários anos fui atleta federada de ginástica artística, modalidade que me permitiu desenvolver valores como a disciplina, a responsabilidade, a perseverança e o trabalho em equipa. Mais tarde, depois de ter realizado o estágio relativo ao meu ano de secundário, tive a oportunidade de assumir o papel de treinadora no meu clube, o que despertou em mim ainda mais interesse pela área do ensino e da formação de jovens.</p>
+        <p>Atualmente, exerço funções como professora de natação, estando em contacto com diferentes faixas etárias, desde os bebés até à idade adulta. Além disso, dou aulas de grupo. Ao longo deste percurso, tenho procurado desenvolver não apenas conhecimentos técnicos e científicos, mas também competências humanas e pedagógicas fundamentais para a profissão docente.</p>
+        <p>Acredito que a Educação Física tem um papel muito mais abrangente do que o simples desenvolvimento das capacidades motoras. Considero que a escola deve ser um espaço de aprendizagem, crescimento pessoal, inclusão e promoção do bem-estar, onde todos os alunos se sintam capazes de participar, aprender e evoluir.</p>
+        <p>Este site surge como um local de reflexão sobre o meu percurso académico e profissional, reunindo aprendizagens, experiências e desafios que contribuirão, certamente, para a construção da professora que idealizo vir a ser.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="navegar">
+  <div class="section-inner">
+    <div class="section-header reveal">
+      <span class="section-num">02</span>
+      <h2 class="section-title">Explorar o Site</h2>
+    </div>
+    <div class="pages-grid">
+      <a class="page-card reveal" href="diario_mj.html">
+        <span class="page-card-num">01 —</span>
+        <div class="page-card-title">Prof.ª Maria João<br>Almeida</div>
+        <p class="page-card-desc">Reflexões sobre as aulas de Psicologia da Educação — SDT, AGT, EVT e motivação.</p>
+        <span class="page-card-arrow">↗</span>
+      </a>
+      <a class="page-card reveal" href="diario_nuno.html">
+        <span class="page-card-num">02 —</span>
+        <div class="page-card-title">Prof. Nuno<br>Corte-Real</div>
+        <p class="page-card-desc">Dinâmicas de grupo, responsabilidade, pensamento crítico e coesão.</p>
+        <span class="page-card-arrow">↗</span>
+      </a>
+      <a class="page-card reveal" href="pesquisas.html">
+        <span class="page-card-num">03 —</span>
+        <div class="page-card-title">As Minhas<br>Pesquisas</div>
+        <p class="page-card-desc">Síndrome do Impostor, Segurança Psicológica e Efeito Pigmaleão.</p>
+        <span class="page-card-arrow">↗</span>
+      </a>
+      <a class="page-card reveal" href="lider.html">
+        <span class="page-card-num">04 —</span>
+        <div class="page-card-title">Projeto<br>do Líder</div>
+        <p class="page-card-desc">O Líder que Sou… O Líder que Quero Ser. Análise SWOT e Plano SMART.</p>
+        <span class="page-card-arrow">↗</span>
+      </a>
+      <a class="page-card reveal" href="o_que_levo.html">
+        <span class="page-card-num">05 —</span>
+        <div class="page-card-title">O Que Levo<br>Comigo</div>
+        <p class="page-card-desc">Carta aberta à futura professora e os mitos que trouxe — e superei — ao longo do semestre.</p>
+        <span class="page-card-arrow">↗</span>
+      </a>
+      <a class="page-card reveal" href="bibliografia.html">
+        <span class="page-card-num">06 —</span>
+        <div class="page-card-title">Bibliografia</div>
+        <p class="page-card-desc">Referências bibliográficas em formato APA e estudos relacionados.</p>
+        <span class="page-card-arrow">↗</span>
+      </a>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <div class="footer-name">Catarina Coutinho Campos</div>
+  <div class="footer-course">Mestrado em Ensino de Educação Física · FADEUP · 2024 / 2025</div>
+</footer>
+
+<script>
+const observer = new IntersectionObserver((entries) => {
+  entries.forEach((e, i) => { if(e.isIntersecting) setTimeout(() => e.target.classList.add('visible'), i * 80); });
+}, { threshold: 0.1 });
+document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
+</script>
+</body>
+</html>

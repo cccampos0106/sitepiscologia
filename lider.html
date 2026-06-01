@@ -1,0 +1,348 @@
+<!DOCTYPE html>
+<html lang="pt">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Projeto do Líder — Catarina Coutinho Campos</title>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400&family=Jost:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  :root {
+    --bg: #f5f0e8; --bg2: #ede7d9; --bg3: #e4dccb;
+    --text: #2c2720; --text-muted: #7a6f62;
+    --accent: #8b6f47; --accent-light: #c4a882;
+    --border: rgba(139,111,71,0.2); --white: #faf7f2;
+    --green: #5a7a52; --red: #8b3a3a; --blue: #3a5a7a; --orange: #8b6033;
+  }
+  html { scroll-behavior: smooth; }
+  body { font-family: 'Jost', sans-serif; background: var(--bg); color: var(--text); font-weight: 300; line-height: 1.7; overflow-x: hidden; }
+  nav {
+    position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+    padding: 1rem 2rem; display: flex; justify-content: space-between; align-items: center;
+    background: rgba(245,240,232,0.95); backdrop-filter: blur(10px); border-bottom: 1px solid var(--border);
+  }
+  .nav-logo { font-family: 'Cormorant Garamond', serif; font-size: 1rem; font-weight: 400; letter-spacing: 0.1em; color: var(--text); text-transform: uppercase; text-decoration:none; white-space:nowrap; }
+  .nav-links { display: flex; gap: 1.4rem; list-style: none; flex-wrap: wrap; justify-content: flex-end; align-items: center; }
+  .nav-links a { font-size: 0.65rem; letter-spacing: 0.1em; text-transform: uppercase; color: var(--text-muted); text-decoration: none; transition: color 0.3s; padding-bottom: 2px; border-bottom: 1px solid transparent; white-space: nowrap; }
+  .nav-links a:hover, .nav-links a.active { color: var(--accent); border-bottom-color: var(--accent-light); }
+  .nav-dropdown { position: relative; }
+  .nav-dropdown-btn { font-size: 0.65rem; letter-spacing: 0.1em; text-transform: uppercase; color: var(--text-muted); background: none; border: none; cursor: pointer; padding-bottom: 2px; border-bottom: 1px solid transparent; font-family: 'Jost', sans-serif; font-weight: 300; transition: color 0.3s; white-space: nowrap; display: flex; align-items: center; gap: 0.3rem; }
+  .nav-dropdown-btn:hover, .nav-dropdown-btn.active { color: var(--accent); border-bottom-color: var(--accent-light); }
+  .nav-dropdown-btn .arrow { font-size: 0.5rem; transition: transform 0.3s; }
+  .nav-dropdown.open .arrow { transform: rotate(180deg); }
+  .nav-dropdown-menu { display: none; position: absolute; top: calc(100% + 12px); left: 0; min-width: 210px; background: rgba(245,240,232,0.98); border: 1px solid var(--border); backdrop-filter: blur(10px); z-index: 200; padding: 0.5rem 0; box-shadow: 0 8px 32px rgba(139,111,71,0.12); }
+  .nav-dropdown:hover .nav-dropdown-menu, .nav-dropdown.open .nav-dropdown-menu { display: block; }
+  .nav-dropdown-menu a { display: block; font-size: 0.65rem; letter-spacing: 0.1em; text-transform: uppercase; color: var(--text-muted); text-decoration: none; padding: 0.7rem 1.2rem; transition: background 0.2s, color 0.2s; border-left: 2px solid transparent; white-space: nowrap; }
+  .nav-dropdown-menu a:hover, .nav-dropdown-menu a.active { color: var(--accent); background: var(--bg2); border-left-color: var(--accent-light); }
+  .nav-hamburger { display:none; flex-direction:column; gap:5px; cursor:pointer; flex-shrink:0; }
+  .nav-hamburger span { display:block; width:22px; height:1px; background:var(--accent); }
+
+  .page-hero { min-height: 50vh; display: flex; align-items: flex-end; padding: 10rem 3rem 4rem; position: relative; overflow: hidden; background: var(--bg2); }
+  .page-hero-bg { position: absolute; top: 50%; right: 0; transform: translateY(-50%); font-family: 'Cormorant Garamond', serif; font-size: 14vw; font-weight: 300; color: rgba(139,111,71,0.06); pointer-events: none; user-select: none; white-space: nowrap; letter-spacing: -0.03em; }
+  .page-hero-content { max-width: 860px; position: relative; z-index: 1; }
+  .page-hero-tag { font-size: 0.65rem; letter-spacing: 0.28em; text-transform: uppercase; color: var(--accent); display: block; margin-bottom: 1rem; }
+  .page-hero-title { font-family: 'Cormorant Garamond', serif; font-size: clamp(2.5rem, 7vw, 5rem); font-weight: 300; line-height: 1.05; color: var(--text); }
+  .page-hero-title em { font-style: italic; color: var(--accent); }
+  .page-hero-line { width: 60px; height: 1px; background: var(--accent-light); margin-top: 2rem; }
+
+  .content-area { padding: 5rem 3rem; }
+  .content-inner { max-width: 900px; margin: 0 auto; }
+  .back-link { display:inline-flex; align-items:center; gap:0.5rem; font-size:0.68rem; letter-spacing:0.15em; text-transform:uppercase; color:var(--accent); text-decoration:none; margin-bottom:3rem; transition:gap 0.3s; }
+  .back-link:hover { gap:0.8rem; }
+
+  .prose-block { margin-bottom: 4rem; }
+  .prose-block h2 { font-family: 'Cormorant Garamond', serif; font-size: clamp(1.6rem, 3vw, 2.2rem); font-weight: 300; color: var(--text); margin-bottom: 1.5rem; border-bottom: 1px solid var(--border); padding-bottom: 1rem; }
+  .prose-block h3 { font-family: 'Cormorant Garamond', serif; font-size: 1.3rem; font-weight: 400; color: var(--accent); margin: 2rem 0 0.8rem; }
+  .prose-block p { font-size: 0.95rem; color: var(--text-muted); line-height: 1.95; margin-bottom: 1rem; text-indent: 2em; }
+
+  /* SWOT */
+  .swot-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 0; border: 1px solid var(--border); margin: 2rem 0; }
+  .swot-cell { padding: 2rem; border: 1px solid var(--border); position: relative; overflow: hidden; }
+  .swot-cell::before { content: attr(data-letter); position: absolute; top: -0.3rem; right: 0.8rem; font-family: 'Cormorant Garamond', serif; font-size: 5rem; font-weight: 300; opacity: 0.08; line-height: 1; }
+  .swot-cell.forcas { background: rgba(90,122,82,0.06); } .swot-cell.forcas::before { color: var(--green); }
+  .swot-cell.fraquezas { background: rgba(139,58,58,0.06); } .swot-cell.fraquezas::before { color: var(--red); }
+  .swot-cell.oportunidades { background: rgba(58,90,122,0.06); } .swot-cell.oportunidades::before { color: var(--blue); }
+  .swot-cell.ameacas { background: rgba(139,96,51,0.06); } .swot-cell.ameacas::before { color: var(--orange); }
+  .swot-label { font-size: 0.6rem; letter-spacing: 0.22em; text-transform: uppercase; margin-bottom: 1rem; display: block; font-weight: 500; }
+  .swot-cell.forcas .swot-label { color: var(--green); } .swot-cell.fraquezas .swot-label { color: var(--red); }
+  .swot-cell.oportunidades .swot-label { color: var(--blue); } .swot-cell.ameacas .swot-label { color: var(--orange); }
+  .swot-list { list-style: none; }
+  .swot-list li { font-size: 0.88rem; color: var(--text-muted); line-height: 1.7; padding: 0.4rem 0; border-bottom: 1px solid rgba(139,111,71,0.08); display: flex; align-items: flex-start; gap: 0.6rem; }
+  .swot-list li::before { content: '—'; color: var(--accent-light); flex-shrink: 0; margin-top: 0.1rem; }
+
+  /* SMART */
+  .smart-grid { display: grid; gap: 1.5rem; margin: 2rem 0; }
+  .smart-card { background: var(--white); border: 1px solid var(--border); overflow: hidden; }
+  .smart-card-header { display: grid; grid-template-columns: 80px 1fr; align-items: stretch; }
+  .smart-card-phase { background: var(--accent); color: var(--white); display: flex; flex-direction: column; align-items: center; justify-content: center; padding: 1.5rem 1rem; text-align: center; }
+  .smart-card-phase-num { font-family:'Cormorant Garamond',serif; font-size:2rem; font-weight:300; line-height:1; }
+  .smart-card-phase-label { font-size:0.55rem; letter-spacing:0.15em; text-transform:uppercase; margin-top:0.3rem; opacity:0.8; }
+  .smart-card-info { padding: 1.5rem; border-bottom: 1px solid var(--border); }
+  .smart-card-period { font-size:0.62rem; letter-spacing:0.18em; text-transform:uppercase; color:var(--accent); display:block; margin-bottom:0.4rem; }
+  .smart-card-title { font-family:'Cormorant Garamond',serif; font-size:1.3rem; font-weight:400; color:var(--text); }
+  .smart-card-body { padding: 1.5rem; }
+  .smart-card-body ul { list-style:none; }
+  .smart-card-body li { font-size:0.88rem; color:var(--text-muted); padding:0.4rem 0; display:flex; align-items:flex-start; gap:0.6rem; border-bottom:1px solid rgba(139,111,71,0.06); line-height:1.6; }
+  .smart-card-body li::before { content:'›'; color:var(--accent-light); flex-shrink:0; }
+  .smart-results { background: var(--bg2); padding: 1.2rem 1.5rem; margin-top: 1rem; }
+  .smart-results-label { font-size:0.6rem; letter-spacing:0.18em; text-transform:uppercase; color:var(--accent); display:block; margin-bottom:0.6rem; }
+  .smart-results ul { list-style:none; }
+  .smart-results li { font-size:0.84rem; color:var(--text-muted); padding:0.25rem 0; display:flex; gap:0.5rem; }
+  .smart-results li::before { content:'✓'; color:var(--accent-light); flex-shrink:0; }
+
+  .alt-bg { background: var(--bg2); padding: 5rem 3rem; }
+  .reveal { opacity:0; transform:translateY(28px); transition: opacity 0.7s ease, transform 0.7s ease; }
+  .reveal.visible { opacity:1; transform:translateY(0); }
+  footer { background: var(--bg3); border-top: 1px solid var(--border); padding: 2rem 3rem; display: flex; justify-content: space-between; align-items: center; }
+  .footer-name { font-family:'Cormorant Garamond',serif; font-size:0.95rem; font-style:italic; color:var(--text-muted); }
+  .footer-course { font-size:0.65rem; letter-spacing:0.15em; text-transform:uppercase; color:var(--accent-light); }
+
+  @media(max-width:900px){
+    nav { padding:1rem 1.5rem; }
+    .nav-links { display:none; flex-direction:column; position:absolute; top:100%; left:0; right:0; background:rgba(245,240,232,0.98); padding:1.5rem; gap:1rem; border-bottom:1px solid var(--border); }
+    .nav-links.open { display:flex; }
+    .nav-hamburger { display:flex; }
+    .nav-dropdown-menu { position:static; box-shadow:none; border:none; border-left:2px solid var(--border); margin-left:1rem; padding:0.3rem 0; }
+    .page-hero, .content-area, .alt-bg { padding-left:1.5rem; padding-right:1.5rem; }
+    .swot-grid { grid-template-columns: 1fr; }
+    .smart-card-header { grid-template-columns: 60px 1fr; }
+    footer { flex-direction:column; gap:0.5rem; text-align:center; }
+  }
+</style>
+</head>
+<body>
+<nav>
+  <a class="nav-logo" href="index.html">Catarina Coutinho Campos</a>
+  <ul class="nav-links" id="navMenu">
+    <li><a href="index.html">Início</a></li>
+    <li class="nav-dropdown" id="dd-diario">
+      <button class="nav-dropdown-btn" onclick="toggleDropdown('dd-diario')">Diário de Bordo <span class="arrow">▼</span></button>
+      <div class="nav-dropdown-menu">
+        <a href="diario_mj.html">Prof.ª Maria João Almeida</a>
+        <a href="diario_nuno.html">Prof. Nuno Corte-Real</a>
+        <a href="diario_reflexao.html">Reflexão Pessoal</a>
+      </div>
+    </li>
+    <li><a href="pesquisas.html">As Minhas Pesquisas</a></li>
+    <li><a href="lider.html" class="active">Projeto do Líder</a></li>
+    <li><a href="o_que_levo.html">O Que Levo Comigo</a></li>
+    <li><a href="bibliografia.html">Bibliografia</a></li>
+  </ul>
+  <div class="nav-hamburger" onclick="document.getElementById('navMenu').classList.toggle('open')">
+    <span></span><span></span><span></span>
+  </div>
+</nav>
+
+<div class="page-hero">
+  <div class="page-hero-bg">Liderança</div>
+  <div class="page-hero-content">
+    <span class="page-hero-tag">Projeto · Comunicação Pedagógica</span>
+    <h1 class="page-hero-title">O Líder que Sou…<br><em>O Líder que Quero Ser</em></h1>
+    <div class="page-hero-line"></div>
+  </div>
+</div>
+
+<div class="content-area">
+  <div class="content-inner">
+    <a class="back-link" href="index.html">← Início</a>
+
+    <div class="prose-block reveal">
+      <h2>Introdução</h2>
+      <p>A liderança é uma competência essencial na profissão docente, uma vez que o professor não tem apenas a responsabilidade de transmitir conhecimentos, mas também de orientar, motivar e acompanhar os alunos ao longo do seu percurso de aprendizagem. Segundo Ferreira (2008), a liderança pode ser entendida como um processo de influência exercido sobre indivíduos ou grupos com o objetivo de alcançar determinadas metas, assumindo o líder um papel fundamental na orientação, coordenação e mobilização dos comportamentos dos elementos que integram o grupo. Neste sentido, o professor desempenha uma função de liderança pedagógica, criando condições que favorecem o desenvolvimento pessoal, social e académico dos alunos.</p>
+      <p>Ao longo do meu percurso enquanto treinadora de ginástica, professora de natação e estudante de Ciências do Desporto, fui desenvolvendo várias competências associadas à liderança, nomeadamente a responsabilidade, a organização, a capacidade de estabelecer relações interpessoais positivas e a adaptação às necessidades dos praticantes. Estas experiências permitiram-me perceber que liderar não significa apenas orientar um grupo, mas também criar condições para que cada pessoa possa aprender, participar e evoluir. Neste contexto, a comunicação assume um papel central, uma vez que é uma das principais ferramentas através das quais o professor exerce a sua liderança e promove a aprendizagem dos alunos.</p>
+      <p>Contudo, ao refletir sobre as minhas experiências, identifiquei uma competência que considero fundamental desenvolver para responder de forma mais eficaz às exigências da futura profissão docente: a <strong style="color:var(--accent);font-weight:400">comunicação pedagógica em grupos numerosos e heterogéneos</strong>.</p>
+      <p>Importa referir que esta escolha não resulta de uma dificuldade em comunicar ou falar perante grupos. Pelo contrário, a minha experiência profissional permitiu-me ganhar confiança na transmissão de informação e na interação com os alunos. No entanto, reconheço que a maior parte dessa experiência ocorreu em grupos relativamente reduzidos, onde é mais fácil verificar se a informação foi compreendida, esclarecer dúvidas individualmente e adaptar a comunicação às necessidades de cada praticante.</p>
+      <p>O contexto escolar apresenta desafios diferentes. As turmas são frequentemente numerosas e compostas por alunos com ritmos de aprendizagem distintos, diferentes níveis de atenção, experiências prévias e motivações variadas. Perante esta realidade, considero que o principal desafio não está apenas em comunicar para um maior número de alunos, mas sobretudo em garantir que a informação transmitida é efetivamente compreendida, retida e aplicada por todos.</p>
+      <p>Assim, o meu objetivo não passa por aprender a comunicar, mas sim por desenvolver a capacidade de comunicar eficazmente em grupos numerosos e heterogéneos, assegurando que a informação chega aos alunos de forma clara e significativa.</p>
+    </div>
+
+    <div class="prose-block reveal">
+      <h2>Justificação da Escolha</h2>
+      <p>A escolha desta competência resulta da análise do meu percurso pessoal e profissional.</p>
+      <p>Ao longo dos últimos anos, a minha intervenção enquanto treinadora e professora decorreu maioritariamente em contextos caracterizados por grupos reduzidos. Nestas situações, a proximidade com os alunos facilita a comunicação, permitindo esclarecer dúvidas de forma imediata, acompanhar individualmente cada praticante e perceber facilmente se a informação foi compreendida.</p>
+      <p>No entanto, a realidade escolar apresenta características bastante diferentes. O professor é frequentemente confrontado com turmas numerosas e heterogéneas, onde coexistem alunos com diferentes níveis de desenvolvimento, interesses, capacidades e experiências. Esta diversidade exige uma adaptação constante da comunicação pedagógica, de forma a garantir que todos os alunos conseguem compreender e atribuir significado às informações transmitidas.</p>
+      <p>Por essa razão, considero que o desenvolvimento desta competência será determinante para a minha evolução profissional enquanto futura professora de Educação Física, permitindo-me responder de forma mais eficaz às exigências do contexto escolar e contribuir para aprendizagens mais significativas por parte dos alunos.</p>
+    </div>
+
+    <div class="prose-block reveal">
+      <h2>Fundamentação Teórica</h2>
+      <h3>A importância da comunicação no contexto educativo</h3>
+      <p>A comunicação é uma das competências mais importantes da profissão docente. É através dela que o professor transmite conhecimentos, organiza tarefas, orienta comportamentos e estabelece relações que influenciam diretamente o processo de ensino-aprendizagem.</p>
+      <p>Contudo, comunicar não significa apenas transmitir informação. Manarte, Lopes e Pereira (2013) defendem que, quando comunicamos, não estamos apenas a transmitir mensagens, mas também a desenvolver atitudes, valores, emoções e formas de relação com os outros. As autoras referem que a comunicação desempenha um papel central no desenvolvimento humano e educativo, contribuindo para a construção da relação pedagógica e para o desenvolvimento integral dos alunos.</p>
+      <p>As mesmas autoras defendem ainda que a educação deve ser entendida como uma prática relacional, na qual as interações estabelecidas entre professor e aluno assumem um papel determinante no desenvolvimento académico, social, emocional e humano dos estudantes.</p>
+      <p>Esta perspetiva levou-me a compreender que a comunicação não é apenas um instrumento para transmitir conteúdos, mas também uma ferramenta essencial para criar relações positivas e promover aprendizagens significativas.</p>
+      <h3>Comunicação para além da transmissão da informação</h3>
+      <p>Ao aprofundar a reflexão sobre esta competência, percebi que a comunicação pedagógica vai muito além da simples transmissão de instruções.</p>
+      <p>Quina, Carreiro da Costa e Diniz (1995) demonstraram que existe frequentemente uma diferença entre a informação transmitida pelo professor e a informação efetivamente evocada pelos alunos. Esta conclusão evidencia que comunicar eficazmente não significa apenas falar de forma clara, mas garantir que a mensagem é compreendida, retida e posteriormente utilizada pelos alunos.</p>
+      <p>Esta ideia parece-me particularmente relevante no contexto da Educação Física. Muitas vezes, o professor pode considerar que uma tarefa foi devidamente explicada, mas isso não significa necessariamente que todos os alunos a tenham compreendido da mesma forma.</p>
+      <p>Desta forma, considero que a qualidade da comunicação pedagógica não deve ser avaliada apenas pela quantidade de informação transmitida, mas sobretudo pela capacidade de garantir que essa informação gera aprendizagem.</p>
+      <h3>Comunicação pedagógica em grupos numerosos e heterogéneos</h3>
+      <p>Apesar da experiência que tenho vindo a adquirir enquanto treinadora de ginástica e professora de natação, reconheço que a maior parte da minha intervenção tem ocorrido em grupos relativamente reduzidos.</p>
+      <p>Neves (2025) destaca precisamente que a diversidade existente nos grupos obriga o professor a ajustar constantemente a sua comunicação, quer ao nível da linguagem utilizada, quer das estratégias de explicação, demonstração e motivação dos alunos. O autor refere ainda que os professores necessitam de adaptar o seu estilo de comunicação às características dos estudantes e à estrutura do grupo, tornando a flexibilidade comunicacional uma competência fundamental para a prática docente.</p>
+      <p>Além disso, a literatura evidencia que a qualidade das relações estabelecidas entre professor e aluno pode facilitar o processo comunicativo. Pinto (2019) destaca a importância de os alunos se sentirem ouvidos e valorizados no contexto escolar, enquanto Manarte, Lopes e Pereira (2013) defendem que a comunicação pedagógica não se limita à transmissão de informação, envolvendo também dimensões relacionais e emocionais.</p>
+      <p>Ainda assim, o principal desafio que identifico não está na construção dessas relações, mas na capacidade de garantir que a informação é eficazmente transmitida, compreendida e aplicada por todos os alunos, especialmente em contextos caracterizados por turmas numerosas e heterogéneas.</p>
+      <h3>O professor como interlocutor qualificado</h3>
+      <p>A reflexão sobre esta temática levou-me também a repensar o papel do professor no processo educativo.</p>
+      <p>Brito e Trindade (2024) defendem que o professor deve assumir-se como um interlocutor qualificado, ou seja, alguém capaz de apoiar de forma ativa e intencional o processo de formação pessoal e social dos seus alunos.</p>
+      <p>Segundo os autores, o professor deve criar condições para que os alunos desenvolvam autonomia, capacidade de reflexão e competências que lhes permitam compreender o mundo que os rodeia. Mais do que transmitir conhecimento, deve estimular, negociar e criar oportunidades de aprendizagem.</p>
+      <p>Esta visão aproxima-se da conceção de liderança pedagógica que pretendo desenvolver enquanto futura professora. Mais do que transmitir conteúdos, pretendo criar condições para que todos os alunos participem ativamente, compreendam a informação e construam aprendizagens significativas.</p>
+    </div>
+  </div>
+</div>
+
+<!-- SWOT -->
+<div class="alt-bg">
+  <div class="content-inner">
+    <div class="prose-block reveal">
+      <h2>Análise SWOT</h2>
+      <p>Análise das forças, fraquezas, oportunidades e ameaças relativamente ao desenvolvimento da comunicação pedagógica em grupos numerosos e heterogéneos.</p>
+      <div class="swot-grid" style="margin-top:2rem;">
+        <div class="swot-cell forcas" data-letter="S">
+          <span class="swot-label">Pontos Fortes (Strengths)</span>
+          <ul class="swot-list">
+            <li>Experiência prévia enquanto treinadora de ginástica e professora de natação.</li>
+            <li>Facilidade em comunicar individualmente e em grupos reduzidos.</li>
+            <li>Capacidade de criar relações positivas com os praticantes.</li>
+            <li>Elevado sentido de responsabilidade e organização.</li>
+            <li>Capacidade de reflexão sobre a própria prática.</li>
+            <li>Motivação para aprender e melhorar continuamente.</li>
+          </ul>
+        </div>
+        <div class="swot-cell fraquezas" data-letter="W">
+          <span class="swot-label">Pontos Fracos (Weaknesses)</span>
+          <ul class="swot-list">
+            <li>Experiência limitada na gestão da comunicação em grupos numerosos.</li>
+            <li>Dificuldade em garantir que a informação chega e é compreendida por todos os alunos simultaneamente.</li>
+            <li>Necessidade de desenvolver estratégias de comunicação adaptadas à heterogeneidade das turmas.</li>
+          </ul>
+        </div>
+        <div class="swot-cell oportunidades" data-letter="O">
+          <span class="swot-label">Oportunidades (Opportunities)</span>
+          <ul class="swot-list">
+            <li>Realização do estágio pedagógico em contexto escolar.</li>
+            <li>Observação de professores experientes.</li>
+            <li>Contacto com turmas diversificadas.</li>
+            <li>Desenvolvimento de competências comunicacionais através da prática docente.</li>
+            <li>Formação contínua na área da pedagogia e comunicação.</li>
+            <li>Feedback dos orientadores, colegas e alunos.</li>
+          </ul>
+        </div>
+        <div class="swot-cell ameacas" data-letter="T">
+          <span class="swot-label">Ameaças (Threats)</span>
+          <ul class="swot-list">
+            <li>Turmas numerosas e heterogéneas que dificultam a gestão da comunicação.</li>
+            <li>Ruído e dispersão da atenção em determinados contextos de aula.</li>
+            <li>Diferenças significativas nos ritmos de aprendizagem dos alunos.</li>
+            <li>Interpretações distintas da mesma informação por parte dos alunos.</li>
+            <li>Possibilidade de surgirem dificuldades comunicacionais em situações novas ou inesperadas.</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- SMART -->
+<div class="content-area">
+  <div class="content-inner">
+    <div class="prose-block reveal">
+      <h2>Plano de Ação SMART</h2>
+      <p><em style="color:var(--accent-light);">Da Transmissão da Informação à Comunicação Pedagógica Eficaz</em></p>
+      <p>Este plano pretende desenvolver a minha capacidade de comunicar eficazmente em contextos educativos caracterizados por turmas numerosas e heterogéneas. O objetivo não consiste apenas em transmitir informação de forma clara, mas em garantir que as mensagens são compreendidas, retidas e aplicadas pelos alunos.</p>
+
+      <div class="smart-grid" style="margin-top:2rem;">
+        <div class="smart-card reveal">
+          <div class="smart-card-header">
+            <div class="smart-card-phase"><div class="smart-card-phase-num">1</div><div class="smart-card-phase-label">Fase</div></div>
+            <div class="smart-card-info"><span class="smart-card-period">Curto Prazo · 1–3 meses</span><div class="smart-card-title">Observação e Sensibilização</div></div>
+          </div>
+          <div class="smart-card-body">
+            <ul>
+              <li>Observar professores experientes, identificando estratégias utilizadas para comunicar com turmas numerosas.</li>
+              <li>Registar diferentes formas de apresentação das instruções (explicação verbal, demonstração prática, feedback e questionamento).</li>
+              <li>Ler literatura relacionada com comunicação pedagógica e eficácia da instrução em Educação Física.</li>
+              <li>Refletir sobre situações em que a informação transmitida pode não corresponder à informação compreendida pelos alunos.</li>
+            </ul>
+          </div>
+          <div class="smart-results">
+            <span class="smart-results-label">Resultados Esperados</span>
+            <ul>
+              <li>Maior consciência da importância da comunicação pedagógica.</li>
+              <li>Identificação de estratégias eficazes utilizadas por professores experientes.</li>
+              <li>Desenvolvimento de uma postura mais reflexiva relativamente à minha própria comunicação.</li>
+            </ul>
+          </div>
+        </div>
+
+        <div class="smart-card reveal">
+          <div class="smart-card-header">
+            <div class="smart-card-phase"><div class="smart-card-phase-num">2</div><div class="smart-card-phase-label">Fase</div></div>
+            <div class="smart-card-info"><span class="smart-card-period">Médio Prazo · 4–6 meses</span><div class="smart-card-title">Experimentação e Desenvolvimento</div></div>
+          </div>
+          <div class="smart-card-body">
+            <ul>
+              <li>Planear aulas recorrendo a diferentes formas de comunicação (verbal, visual e demonstração prática).</li>
+              <li>Utilizar estratégias de verificação da compreensão das instruções através de perguntas e reformulação por parte dos alunos.</li>
+              <li>Solicitar feedback a colegas e orientadores relativamente à clareza das explicações.</li>
+              <li>Adaptar a linguagem e as estratégias de comunicação às características dos diferentes grupos de alunos.</li>
+            </ul>
+          </div>
+          <div class="smart-results">
+            <span class="smart-results-label">Resultados Esperados</span>
+            <ul>
+              <li>Aumento da confiança na comunicação com grupos mais numerosos.</li>
+              <li>Melhoria da capacidade de adaptação da mensagem aos diferentes alunos.</li>
+              <li>Maior eficácia na transmissão e compreensão das instruções.</li>
+            </ul>
+          </div>
+        </div>
+
+        <div class="smart-card reveal">
+          <div class="smart-card-header">
+            <div class="smart-card-phase"><div class="smart-card-phase-num">3</div><div class="smart-card-phase-label">Fase</div></div>
+            <div class="smart-card-info"><span class="smart-card-period">Longo Prazo · 7–9 meses</span><div class="smart-card-title">Aplicação e Consolidação</div></div>
+          </div>
+          <div class="smart-card-body">
+            <ul>
+              <li>Lecionar unidades didáticas em contexto real de estágio.</li>
+              <li>Registar semanalmente situações de sucesso e dificuldades comunicacionais num diário reflexivo.</li>
+              <li>Utilizar gravações de vídeo para analisar aspetos relacionados com a comunicação verbal e não verbal.</li>
+              <li>Construir um portfólio de desenvolvimento profissional com evidências da evolução da minha comunicação pedagógica.</li>
+            </ul>
+          </div>
+          <div class="smart-results">
+            <span class="smart-results-label">Resultados Esperados</span>
+            <ul>
+              <li>Comunicação mais clara, estruturada e adaptada às necessidades dos alunos.</li>
+              <li>Maior capacidade de garantir a compreensão da informação em grupos numerosos e heterogéneos.</li>
+              <li>Desenvolvimento de uma comunicação pedagógica mais eficaz e consistente.</li>
+              <li>Evolução da confiança enquanto futura professora e líder pedagógica.</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<footer>
+  <div class="footer-name">Catarina Coutinho Campos</div>
+  <div class="footer-course">Mestrado em Ensino de Educação Física · FADEUP · 2024 / 2025</div>
+</footer>
+<script>
+function toggleDropdown(id) {
+  const dd = document.getElementById(id);
+  dd.classList.toggle('open');
+}
+document.addEventListener('click', function(e) {
+  if (!e.target.closest('.nav-dropdown')) {
+    document.querySelectorAll('.nav-dropdown').forEach(d => d.classList.remove('open'));
+  }
+});
+const observer = new IntersectionObserver((entries) => {
+  entries.forEach((e, i) => { if(e.isIntersecting) setTimeout(() => e.target.classList.add('visible'), i * 80); });
+}, { threshold: 0.05 });
+document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
+</script>
+</body>
+</html>

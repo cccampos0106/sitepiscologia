@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html lang="pt">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Reflexão Pessoal — Catarina Coutinho Campos</title>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400&family=Jost:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  :root { --bg: #f5f0e8; --bg2: #ede7d9; --bg3: #e4dccb; --text: #2c2720; --text-muted: #7a6f62; --accent: #8b6f47; --accent-light: #c4a882; --border: rgba(139,111,71,0.2); --white: #faf7f2; }
+  html { scroll-behavior: smooth; }
+  body { font-family: 'Jost', sans-serif; background: var(--bg); color: var(--text); font-weight: 300; line-height: 1.7; overflow-x: hidden; }
+  nav {
+    position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+    padding: 1rem 2rem; display: flex; justify-content: space-between; align-items: center;
+    background: rgba(245,240,232,0.95); backdrop-filter: blur(10px); border-bottom: 1px solid var(--border);
+  }
+  .nav-logo { font-family: 'Cormorant Garamond', serif; font-size: 1rem; font-weight: 400; letter-spacing: 0.1em; color: var(--text); text-transform: uppercase; text-decoration:none; white-space:nowrap; }
+  .nav-links { display: flex; gap: 1.4rem; list-style: none; flex-wrap: wrap; justify-content: flex-end; align-items: center; }
+  .nav-links a { font-size: 0.65rem; letter-spacing: 0.1em; text-transform: uppercase; color: var(--text-muted); text-decoration: none; transition: color 0.3s; padding-bottom: 2px; border-bottom: 1px solid transparent; white-space: nowrap; }
+  .nav-links a:hover, .nav-links a.active { color: var(--accent); border-bottom-color: var(--accent-light); }
+  .nav-dropdown { position: relative; }
+  .nav-dropdown-btn { font-size: 0.65rem; letter-spacing: 0.1em; text-transform: uppercase; color: var(--text-muted); background: none; border: none; cursor: pointer; padding-bottom: 2px; border-bottom: 1px solid transparent; font-family: 'Jost', sans-serif; font-weight: 300; transition: color 0.3s; white-space: nowrap; display: flex; align-items: center; gap: 0.3rem; }
+  .nav-dropdown-btn:hover, .nav-dropdown-btn.active { color: var(--accent); border-bottom-color: var(--accent-light); }
+  .nav-dropdown-btn .arrow { font-size: 0.5rem; transition: transform 0.3s; }
+  .nav-dropdown.open .arrow { transform: rotate(180deg); }
+  .nav-dropdown-menu { display: none; position: absolute; top: calc(100% + 12px); left: 0; min-width: 210px; background: rgba(245,240,232,0.98); border: 1px solid var(--border); backdrop-filter: blur(10px); z-index: 200; padding: 0.5rem 0; box-shadow: 0 8px 32px rgba(139,111,71,0.12); }
+  .nav-dropdown:hover .nav-dropdown-menu, .nav-dropdown.open .nav-dropdown-menu { display: block; }
+  .nav-dropdown-menu a { display: block; font-size: 0.65rem; letter-spacing: 0.1em; text-transform: uppercase; color: var(--text-muted); text-decoration: none; padding: 0.7rem 1.2rem; transition: background 0.2s, color 0.2s; border-left: 2px solid transparent; white-space: nowrap; }
+  .nav-dropdown-menu a:hover, .nav-dropdown-menu a.active { color: var(--accent); background: var(--bg2); border-left-color: var(--accent-light); }
+  .nav-hamburger { display:none; flex-direction:column; gap:5px; cursor:pointer; flex-shrink:0; }
+  .nav-hamburger span { display:block; width:22px; height:1px; background:var(--accent); }
+  .page-hero { min-height: 50vh; display: flex; align-items: flex-end; padding: 10rem 3rem 4rem; position: relative; overflow: hidden; background: var(--bg2); }
+  .page-hero-bg { position: absolute; top: 50%; right: 0; transform: translateY(-50%); font-family: 'Cormorant Garamond', serif; font-size: 14vw; font-weight: 300; color: rgba(139,111,71,0.06); pointer-events: none; user-select: none; white-space: nowrap; }
+  .page-hero-content { max-width: 860px; position: relative; z-index: 1; }
+  .page-hero-tag { font-size: 0.65rem; letter-spacing: 0.28em; text-transform: uppercase; color: var(--accent); display: block; margin-bottom: 1rem; }
+  .page-hero-title { font-family: 'Cormorant Garamond', serif; font-size: clamp(2.2rem, 6vw, 4.5rem); font-weight: 300; line-height: 1.05; color: var(--text); }
+  .page-hero-title em { font-style: italic; color: var(--accent); }
+  .page-hero-line { width: 60px; height: 1px; background: var(--accent-light); margin-top: 2rem; }
+  .content-area { padding: 5rem 3rem 8rem; }
+  .content-inner { max-width: 860px; margin: 0 auto; }
+  .back-link { display:inline-flex; align-items:center; gap:0.5rem; font-size:0.68rem; letter-spacing:0.15em; text-transform:uppercase; color:var(--accent); text-decoration:none; margin-bottom:3rem; transition:gap 0.3s; }
+  .back-link:hover { gap:0.8rem; }
+  .reflexao-text p { font-size: 0.97rem; color: var(--text-muted); line-height: 1.95; text-indent: 2em; margin-bottom: 1.4rem; }
+  .reflexao-text p:first-child::first-letter { font-family: 'Cormorant Garamond', serif; font-size: 3.5rem; font-weight: 300; float: left; line-height: 0.85; margin-right: 0.15rem; color: var(--accent); font-style: italic; }
+  .reflexao-text p:first-child { text-indent: 0; }
+  .reveal { opacity:0; transform:translateY(28px); transition: opacity 0.7s ease, transform 0.7s ease; }
+  .reveal.visible { opacity:1; transform:translateY(0); }
+  footer { background: var(--bg3); border-top: 1px solid var(--border); padding: 2rem 3rem; display: flex; justify-content: space-between; align-items: center; }
+  .footer-name { font-family:'Cormorant Garamond',serif; font-size:0.95rem; font-style:italic; color:var(--text-muted); }
+  .footer-course { font-size:0.65rem; letter-spacing:0.15em; text-transform:uppercase; color:var(--accent-light); }
+  @media(max-width:900px){ nav { padding:1rem 1.5rem; } .nav-links { display:none; flex-direction:column; position:absolute; top:100%; left:0; right:0; background:rgba(245,240,232,0.98); padding:1.5rem; gap:1rem; border-bottom:1px solid var(--border); } .nav-links.open { display:flex; } .nav-hamburger { display:flex; } .nav-dropdown-menu { position:static; box-shadow:none; border:none; border-left:2px solid var(--border); margin-left:1rem; } .page-hero, .content-area { padding-left:1.5rem; padding-right:1.5rem; } footer { flex-direction:column; gap:0.5rem; text-align:center; } }
+</style>
+</head>
+<body>
+<nav>
+  <a class="nav-logo" href="index.html">Catarina Coutinho Campos</a>
+  <ul class="nav-links" id="navMenu">
+    <li><a href="index.html">Início</a></li>
+    <li class="nav-dropdown" id="dd-diario">
+      <button class="nav-dropdown-btn" onclick="toggleDropdown('dd-diario')">Diário de Bordo <span class="arrow">▼</span></button>
+      <div class="nav-dropdown-menu">
+        <a href="diario_mj.html">Prof.ª Maria João Almeida</a>
+        <a href="diario_nuno.html">Prof. Nuno Corte-Real</a>
+        <a href="diario_reflexao.html" class="active">Reflexão Pessoal</a>
+      </div>
+    </li>
+    <li><a href="pesquisas.html">As Minhas Pesquisas</a></li>
+    <li><a href="lider.html">Projeto do Líder</a></li>
+    <li><a href="o_que_levo.html">O Que Levo Comigo</a></li>
+    <li><a href="bibliografia.html">Bibliografia</a></li>
+  </ul>
+  <div class="nav-hamburger" onclick="document.getElementById('navMenu').classList.toggle('open')"><span></span><span></span><span></span></div>
+</nav>
+
+<div class="page-hero">
+  <div class="page-hero-bg">Reflexão</div>
+  <div class="page-hero-content">
+    <span class="page-hero-tag">Diário de Bordo · Síntese Semestral</span>
+    <h1 class="page-hero-title">Reflexão<br><em>Pessoal das Aulas</em></h1>
+    <div class="page-hero-line"></div>
+  </div>
+</div>
+
+<div class="content-area">
+  <div class="content-inner">
+    <a class="back-link" href="index.html">← Início</a>
+    <div class="reflexao-text reveal">
+      <p>Primeiramente, esta unidade curricular permitiu-me compreender que o processo educativo é muito mais complexo do que inicialmente imaginava.</p>
+      <p>Os diferentes temas explorados levaram-me a perceber que ensinar implica compreender os alunos na sua globalidade, reconhecendo que fatores psicológicos, emocionais, sociais e relacionais influenciam diretamente a forma como aprendem, participam e se desenvolvem. Esta tomada de consciência foi particularmente importante para mim enquanto futura professora de Educação Física, uma vez que me fez refletir sobre a responsabilidade que os docentes têm na formação integral dos alunos.</p>
+      <p>Acerca do conceito de saúde, uma das aprendizagens mais significativas foi perceber que este não se limita à ausência de doença nem à condição física. Sendo estudante de Educação Física e tendo uma ligação próxima ao desporto desde cedo, sempre associei a saúde à prática regular de atividade física e à adoção de hábitos saudáveis. Contudo, as discussões realizadas em aula permitiram-me compreender que a saúde envolve também dimensões psicológicas, emocionais e sociais. Fatores como a autoestima, as relações interpessoais, o contexto familiar, o sentimento de pertença ou o equilíbrio emocional desempenham um papel fundamental no bem-estar das pessoas. Esta visão mais abrangente levou-me a refletir sobre a importância de promover uma educação para a saúde que vá além do exercício físico e que contribua para o desenvolvimento equilibrado dos alunos.</p>
+      <p>Relativamente ao desenvolvimento humano e aos processos de aprendizagem, os conteúdos abordados ajudaram-me a compreender melhor a diversidade existente nas salas de aula. Muitas vezes, enquanto alunos, tendemos a olhar para a turma como um grupo relativamente homogéneo. No entanto, ao longo desta unidade curricular, percebi que cada aluno possui características, experiências, interesses, motivações e ritmos de aprendizagem distintos. Esta realidade exige que o professor seja capaz de adaptar estratégias, metodologias e formas de comunicação, procurando responder às necessidades de todos os alunos. Esta reflexão tornou-se ainda mais relevante quando pensei no meu futuro profissional, uma vez que me fez reconhecer a importância de criar ambientes inclusivos onde cada aluno se sinta valorizado, respeitado e capaz de aprender.</p>
+      <p>Além disso, os conteúdos relacionados com a motivação despertaram particularmente o meu interesse. Compreendi que a aprendizagem não depende apenas das capacidades dos alunos, mas também da forma como estes se sentem perante as tarefas, dos objetivos que estabelecem e do significado que atribuem às experiências educativas. Esta ideia levou-me a refletir sobre a importância de criar aulas que despertem interesse, promovam o envolvimento dos alunos e valorizem o esforço e a progressão individual. Enquanto futura professora, considero fundamental contribuir para que os alunos desenvolvam confiança nas suas capacidades e encontrem na escola um espaço onde se sintam motivados a aprender e a superar desafios.</p>
+      <p>Outro aspeto que considero muito enriquecedor foi a oportunidade de participar em debates, atividades práticas e momentos de partilha com os colegas. Através destas experiências, percebi que muitas questões relacionadas com a educação não possuem respostas simples ou universais. Pelo contrário, exigem reflexão, análise crítica e abertura para considerar diferentes perspetivas. Ouvir opiniões distintas das minhas permitiu-me questionar algumas ideias pré-concebidas e compreender melhor a complexidade dos fenómenos educativos. Esta capacidade de refletir criticamente sobre a prática e sobre os desafios da educação é algo que considero essencial para qualquer profissional da área.</p>
+      <p>Ao longo do semestre, fui também percebendo a importância da relação professor-aluno no sucesso do processo educativo. Mais do que transmitir conteúdos, o professor tem a capacidade de influenciar a forma como os alunos se veem a si próprios, como encaram os desafios e como se relacionam com a aprendizagem. Pequenos gestos de apoio, incentivo ou reconhecimento podem ter um impacto significativo na confiança e na motivação dos alunos. Esta ideia fez-me refletir sobre o tipo de professora que pretendo ser e sobre a importância de construir relações positivas, baseadas no respeito, na empatia e na confiança.</p>
+      <p>Por fim, considero que esta unidade curricular contribuiu de forma muito significativa para a construção da minha identidade profissional. Mais do que adquirir conhecimentos teóricos, tive a oportunidade de refletir sobre os valores, as competências e as atitudes que considero fundamentais para o exercício da profissão docente. Compreendi que ser professora implica muito mais do que ensinar conteúdos. Implica acompanhar, orientar, motivar e contribuir para o desenvolvimento integral dos alunos.</p>
+      <p>Quero ser uma professora capaz de criar ambientes de aprendizagem positivos, inclusivos e estimulantes, onde os alunos se sintam seguros para participar, errar, aprender e crescer. Acima de tudo, espero conseguir deixar uma marca positiva no percurso dos meus futuros alunos, ajudando-os não apenas a desenvolver competências académicas e motoras, mas também a tornarem-se pessoas mais confiantes, autónomas e preparadas para os desafios da vida.</p>
+    </div>
+  </div>
+</div>
+
+<footer>
+  <div class="footer-name">Catarina Coutinho Campos</div>
+  <div class="footer-course">Mestrado em Ensino de Educação Física · FADEUP · 2024 / 2025</div>
+</footer>
+<script>
+function toggleDropdown(id) { document.getElementById(id).classList.toggle('open'); }
+document.addEventListener('click', function(e) { if (!e.target.closest('.nav-dropdown')) document.querySelectorAll('.nav-dropdown').forEach(d => d.classList.remove('open')); });
+const observer = new IntersectionObserver((entries) => { entries.forEach((e, i) => { if(e.isIntersecting) setTimeout(() => e.target.classList.add('visible'), i * 80); }); }, { threshold: 0.08 });
+document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
+</script>
+</body>
+</html>

@@ -1,0 +1,153 @@
+<!DOCTYPE html>
+<html lang="pt">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Prof.ª Maria João Almeida — Catarina Coutinho Campos</title>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400&family=Jost:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  :root { --bg: #f5f0e8; --bg2: #ede7d9; --bg3: #e4dccb; --text: #2c2720; --text-muted: #7a6f62; --accent: #8b6f47; --accent-light: #c4a882; --border: rgba(139,111,71,0.2); --white: #faf7f2; }
+  html { scroll-behavior: smooth; }
+  body { font-family: 'Jost', sans-serif; background: var(--bg); color: var(--text); font-weight: 300; line-height: 1.7; overflow-x: hidden; }
+  nav {
+    position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+    padding: 1rem 2rem; display: flex; justify-content: space-between; align-items: center;
+    background: rgba(245,240,232,0.95); backdrop-filter: blur(10px); border-bottom: 1px solid var(--border);
+  }
+  .nav-logo { font-family: 'Cormorant Garamond', serif; font-size: 1rem; font-weight: 400; letter-spacing: 0.1em; color: var(--text); text-transform: uppercase; text-decoration:none; white-space:nowrap; }
+  .nav-links { display: flex; gap: 1.4rem; list-style: none; flex-wrap: wrap; justify-content: flex-end; align-items: center; }
+  .nav-links a { font-size: 0.65rem; letter-spacing: 0.1em; text-transform: uppercase; color: var(--text-muted); text-decoration: none; transition: color 0.3s; padding-bottom: 2px; border-bottom: 1px solid transparent; white-space: nowrap; }
+  .nav-links a:hover, .nav-links a.active { color: var(--accent); border-bottom-color: var(--accent-light); }
+  .nav-dropdown { position: relative; }
+  .nav-dropdown-btn { font-size: 0.65rem; letter-spacing: 0.1em; text-transform: uppercase; color: var(--text-muted); background: none; border: none; cursor: pointer; padding-bottom: 2px; border-bottom: 1px solid transparent; font-family: 'Jost', sans-serif; font-weight: 300; transition: color 0.3s; white-space: nowrap; display: flex; align-items: center; gap: 0.3rem; }
+  .nav-dropdown-btn:hover, .nav-dropdown-btn.active { color: var(--accent); border-bottom-color: var(--accent-light); }
+  .nav-dropdown-btn .arrow { font-size: 0.5rem; transition: transform 0.3s; }
+  .nav-dropdown.open .arrow { transform: rotate(180deg); }
+  .nav-dropdown-menu { display: none; position: absolute; top: calc(100% + 12px); left: 0; min-width: 210px; background: rgba(245,240,232,0.98); border: 1px solid var(--border); backdrop-filter: blur(10px); z-index: 200; padding: 0.5rem 0; box-shadow: 0 8px 32px rgba(139,111,71,0.12); }
+  .nav-dropdown:hover .nav-dropdown-menu, .nav-dropdown.open .nav-dropdown-menu { display: block; }
+  .nav-dropdown-menu a { display: block; font-size: 0.65rem; letter-spacing: 0.1em; text-transform: uppercase; color: var(--text-muted); text-decoration: none; padding: 0.7rem 1.2rem; transition: background 0.2s, color 0.2s; border-left: 2px solid transparent; white-space: nowrap; }
+  .nav-dropdown-menu a:hover, .nav-dropdown-menu a.active { color: var(--accent); background: var(--bg2); border-left-color: var(--accent-light); }
+  .nav-hamburger { display:none; flex-direction:column; gap:5px; cursor:pointer; flex-shrink:0; }
+  .nav-hamburger span { display:block; width:22px; height:1px; background:var(--accent); }
+  .page-hero { min-height: 50vh; display: flex; align-items: flex-end; padding: 10rem 3rem 4rem; position: relative; overflow: hidden; background: var(--bg2); }
+  .page-hero-bg { position: absolute; top: 50%; left: 3rem; transform: translateY(-50%); font-family: 'Cormorant Garamond', serif; font-size: 14vw; font-weight: 300; color: rgba(139,111,71,0.06); pointer-events: none; user-select: none; white-space: nowrap; }
+  .page-hero-content { max-width: 860px; position: relative; z-index: 1; }
+  .page-hero-tag { font-size: 0.65rem; letter-spacing: 0.28em; text-transform: uppercase; color: var(--accent); display: block; margin-bottom: 1rem; }
+  .page-hero-title { font-family: 'Cormorant Garamond', serif; font-size: clamp(2.2rem, 6vw, 4.5rem); font-weight: 300; line-height: 1.05; color: var(--text); }
+  .page-hero-title em { font-style: italic; color: var(--accent); }
+  .page-hero-line { width: 60px; height: 1px; background: var(--accent-light); margin-top: 2rem; }
+  .content-area { padding: 5rem 3rem; }
+  .content-inner { max-width: 860px; margin: 0 auto; }
+  .back-link { display:inline-flex; align-items:center; gap:0.5rem; font-size:0.68rem; letter-spacing:0.15em; text-transform:uppercase; color:var(--accent); text-decoration:none; margin-bottom:3rem; transition:gap 0.3s; }
+  .back-link:hover { gap:0.8rem; }
+  .timeline { position: relative; padding-left: 2.5rem; }
+  .timeline::before { content:''; position:absolute; left:0; top:0; bottom:0; width:1px; background: linear-gradient(to bottom, var(--accent-light), transparent); }
+  .timeline-entry { position: relative; margin-bottom: 3.5rem; }
+  .timeline-entry::before { content:''; position:absolute; left:-2.5rem; top:0.4rem; width:8px; height:8px; border-radius:50%; background: var(--accent-light); border: 2px solid var(--bg); box-shadow: 0 0 0 3px var(--accent-light); }
+  .timeline-entry-title { font-family: 'Cormorant Garamond', serif; font-size: 1.55rem; font-weight: 400; color: var(--text); margin-bottom: 0.5rem; line-height: 1.2; }
+  .timeline-entry-subtitle { font-size: 0.65rem; letter-spacing: 0.2em; text-transform: uppercase; color: var(--accent); margin-bottom: 1.2rem; display: block; }
+  .timeline-entry-body p { font-size: 0.95rem; color: var(--text-muted); line-height: 1.95; text-indent: 2em; margin-bottom: 1rem; }
+  .highlight-box { background: var(--white); border-left: 3px solid var(--accent-light); padding: 1.5rem 2rem; margin: 2rem 0; font-family: 'Cormorant Garamond', serif; font-style: italic; font-size: 1.2rem; line-height: 1.7; color: var(--text); }
+.reveal { opacity:0; transform:translateY(28px); transition: opacity 0.7s ease, transform 0.7s ease; }
+  .reveal.visible { opacity:1; transform:translateY(0); }
+  footer { background: var(--bg3); border-top: 1px solid var(--border); padding: 2rem 3rem; display: flex; justify-content: space-between; align-items: center; }
+  .footer-name { font-family:'Cormorant Garamond',serif; font-size:0.95rem; font-style:italic; color:var(--text-muted); }
+  .footer-course { font-size:0.65rem; letter-spacing:0.15em; text-transform:uppercase; color:var(--accent-light); }
+  @media(max-width:900px){ nav { padding:1rem 1.5rem; } .nav-links { display:none; flex-direction:column; position:absolute; top:100%; left:0; right:0; background:rgba(245,240,232,0.98); padding:1.5rem; gap:1rem; border-bottom:1px solid var(--border); } .nav-links.open { display:flex; } .nav-hamburger { display:flex; } .nav-dropdown-menu { position:static; box-shadow:none; border:none; border-left:2px solid var(--border); margin-left:1rem; } .page-hero, .content-area { padding-left:1.5rem; padding-right:1.5rem; } footer { flex-direction:column; gap:0.5rem; text-align:center; } }
+</style>
+</head>
+<body>
+<nav>
+  <a class="nav-logo" href="index.html">Catarina Coutinho Campos</a>
+  <ul class="nav-links" id="navMenu">
+    <li><a href="index.html">Início</a></li>
+    <li class="nav-dropdown" id="dd-diario">
+      <button class="nav-dropdown-btn" onclick="toggleDropdown('dd-diario')">Diário de Bordo <span class="arrow">▼</span></button>
+      <div class="nav-dropdown-menu">
+        <a href="diario_mj.html" class="active">Prof.ª Maria João Almeida</a>
+        <a href="diario_nuno.html">Prof. Nuno Corte-Real</a>
+        <a href="diario_reflexao.html">Reflexão Pessoal</a>
+      </div>
+    </li>
+    <li><a href="pesquisas.html">As Minhas Pesquisas</a></li>
+    <li><a href="lider.html">Projeto do Líder</a></li>
+    <li><a href="o_que_levo.html">O Que Levo Comigo</a></li>
+    <li><a href="bibliografia.html">Bibliografia</a></li>
+  </ul>
+  <div class="nav-hamburger" onclick="document.getElementById('navMenu').classList.toggle('open')"><span></span><span></span><span></span></div>
+</nav>
+
+<div class="page-hero">
+  <div class="page-hero-bg">Diário</div>
+  <div class="page-hero-content">
+    <span class="page-hero-tag">Diário de Bordo · Psicologia da Educação</span>
+    <h1 class="page-hero-title">Prof.ª Maria João<br><em>Almeida</em></h1>
+    <div class="page-hero-line"></div>
+  </div>
+</div>
+
+<div class="content-area">
+  <div class="content-inner">
+    <a class="back-link" href="index.html">← Início</a>
+    <div class="timeline">
+
+      <div class="timeline-entry reveal">
+        <div class="timeline-entry-title">A Educação Física como Experiência Psicológica</div>
+        <span class="timeline-entry-subtitle">Aula 01</span>
+        <div class="timeline-entry-body">
+          <p>Aspetos como a exposição perante os colegas, a comparação social e a forma como cada aluno perceciona o seu próprio corpo podem influenciar significativamente a experiência vivida nas aulas.</p>
+          <p>Uma das ideias que mais me marcou foi a de que a motivação dos alunos nem sempre é evidente à primeira vista. Um aluno pode participar nas atividades propostas e aparentar envolvimento, sem que isso signifique necessariamente que se sente motivado ou confortável naquele contexto. Esta perspetiva levou-me a compreender a importância de estar atento não apenas aos comportamentos observáveis, mas também a indicadores mais discretos, como o receio de falhar, a vergonha, o evitamento de determinadas situações ou a procura de estratégias de proteção perante o grupo.</p>
+          <p>No final da aula, fiquei com a convicção de que o papel do professor de Educação Física vai muito além do ensino de conteúdos e habilidades motoras. É igualmente necessário compreender os alunos na sua dimensão emocional e social, criando um ambiente onde se sintam seguros, valorizados e capazes de participar de forma positiva nas experiências de aprendizagem.</p>
+        </div>
+      </div>
+
+      <div class="timeline-entry reveal">
+        <div class="timeline-entry-title">SDT e Motivação</div>
+        <span class="timeline-entry-subtitle">Aula 02 — Teoria da Autodeterminação</span>
+        <div class="timeline-entry-body">
+          <p>A abordagem à Teoria da Autodeterminação permitiu-me compreender melhor os fatores que influenciam a motivação dos alunos e perceber que esta não depende apenas da vontade individual de participar. A análise das necessidades psicológicas básicas de autonomia, competência e relacionamento mostrou-me que a qualidade da motivação está fortemente relacionada com o ambiente criado pelo professor e com a forma como os alunos experienciam as situações de aprendizagem.</p>
+          <p>Em muitos casos, os alunos necessitam de sentir que aquilo que fazem tem significado, que possuem alguma capacidade de escolha e que são apoiados ao longo do processo de aprendizagem.</p>
+          <p>Outro aspeto que considerei relevante foi a distinção entre motivação intrínseca, motivação extrínseca e amotivação. Esta diferenciação permitiu-me perceber que comportamentos aparentemente semelhantes podem resultar de razões muito diferentes, o que reforça a necessidade de o professor procurar compreender as verdadeiras motivações dos seus alunos antes de tirar conclusões precipitadas.</p>
+          <p>A principal reflexão que retirei desta aula relaciona-se com a importância do clima criado pelo professor. Enquanto futura professora, considero fundamental promover contextos onde os alunos se sintam competentes, envolvidos e valorizados. Percebi também que pequenas decisões pedagógicas, como a forma de comunicar uma tarefa, o feedback fornecido ou as oportunidades de participação oferecidas aos alunos, podem ter um impacto significativo na sua motivação e no seu envolvimento nas aulas.</p>
+        </div>
+      </div>
+
+      <div class="timeline-entry reveal">
+        <div class="timeline-entry-title">AGT na Educação Física e Perfis</div>
+        <span class="timeline-entry-subtitle">Aula 03 — Teoria dos Objetivos de Realização</span>
+        <div class="timeline-entry-body">
+          <p>A exploração da Teoria dos Objetivos de Realização permitiu-me compreender que o conceito de sucesso não é vivido da mesma forma por todos os alunos. Enquanto alguns encontram satisfação no facto de aprenderem, melhorarem e superarem os seus próprios desafios, outros tendem a avaliar o seu desempenho através da comparação com os colegas e da necessidade de demonstrar superioridade.</p>
+          <p>Esta distinção levou-me a refletir sobre a influência que o professor exerce na construção do clima de aula. Dependendo da forma como organiza as atividades, define critérios de sucesso ou fornece feedback, pode promover um ambiente mais orientado para a aprendizagem e para o desenvolvimento individual ou, pelo contrário, reforçar excessivamente a competição e a comparação social.</p>
+          <p>A análise dos diferentes perfis ajudou-me ainda a perceber que os alunos não reagem todos da mesma forma perante as mesmas situações. Alguns demonstram maior preocupação com a evolução pessoal, enquanto outros procuram reconhecimento externo ou validação por parte dos colegas. Esta diversidade reforça a necessidade de o professor conhecer os seus alunos e adaptar as suas estratégias pedagógicas às características de cada grupo.</p>
+          <div class="highlight-box">"O verdadeiro desafio do professor não está apenas em ensinar conteúdos, mas também em criar condições para que todos os alunos possam experienciar sucesso. Mais do que destacar aqueles que apresentam melhor desempenho, importa valorizar o esforço, a progressão e o envolvimento de cada aluno no processo de aprendizagem."</div>
+        </div>
+      </div>
+
+      <div class="timeline-entry reveal">
+        <div class="timeline-entry-title">EVT e Exemplos de Perfis</div>
+        <span class="timeline-entry-subtitle">Aula 04 — Teoria Expectativa-Valor</span>
+        <div class="timeline-entry-body">
+          <p>A abordagem à Teoria Expectativa-Valor permitiu-me compreender de forma mais aprofundada os fatores que influenciam a participação dos alunos nas atividades propostas. Até então, tendia a associar a participação sobretudo à confiança que os alunos têm nas suas capacidades ou à importância que atribuem à tarefa. No entanto, esta aula mostrou-me que existe um terceiro elemento igualmente relevante: o custo que cada aluno associa à sua participação.</p>
+          <p>Achei particularmente interessante perceber que, mesmo quando um aluno acredita ser capaz de realizar uma tarefa e reconhece a sua importância, pode optar por não participar se sentir que o esforço exigido, o receio de falhar ou a exposição perante os colegas representam um custo demasiado elevado. Esta ideia levou-me a olhar para a participação dos alunos de uma forma mais abrangente e menos centrada apenas na motivação ou na competência percebida.</p>
+          <p>Os exemplos de perfis apresentados durante a aula contribuíram para tornar estes conceitos mais concretos, demonstrando que uma mesma tarefa pode ser interpretada de formas muito diferentes por alunos distintos. Enquanto alguns a encaram como uma oportunidade de aprendizagem, outros podem associá-la a sentimentos de ansiedade, insegurança ou desconforto, o que influencia diretamente o seu envolvimento.</p>
+          <p>Esta reflexão reforçou a importância de considerar a perspetiva dos alunos quando se planeiam experiências de aprendizagem. Enquanto futura professora de Educação Física, considero fundamental criar contextos onde os alunos se sintam capazes de participar sem receio excessivo de errar ou de serem julgados. Mais do que propor atividades interessantes, importa também reduzir barreiras psicológicas que possam limitar o envolvimento e tornar a aprendizagem mais acessível e significativa para todos.</p>
+        </div>
+      </div>
+
+    </div>
+</div>
+</div>
+
+<footer>
+  <div class="footer-name">Catarina Coutinho Campos</div>
+  <div class="footer-course">Mestrado em Ensino de Educação Física · FADEUP · 2024 / 2025</div>
+</footer>
+<script>
+function toggleDropdown(id) { document.getElementById(id).classList.toggle('open'); }
+document.addEventListener('click', function(e) { if (!e.target.closest('.nav-dropdown')) document.querySelectorAll('.nav-dropdown').forEach(d => d.classList.remove('open')); });
+const observer = new IntersectionObserver((entries) => { entries.forEach((e, i) => { if(e.isIntersecting) setTimeout(() => e.target.classList.add('visible'), i * 80); }); }, { threshold: 0.08 });
+document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
+</script>
+</body>
+</html>
