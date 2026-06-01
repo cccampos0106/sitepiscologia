@@ -30,7 +30,7 @@
   .nav-dropdown-btn .arrow { font-size: 0.5rem; transition: transform 0.3s; }
   .nav-dropdown.open .arrow { transform: rotate(180deg); }
   .nav-dropdown-menu { display: none; position: absolute; top: calc(100% + 12px); left: 0; min-width: 210px; background: rgba(245,240,232,0.98); border: 1px solid var(--border); backdrop-filter: blur(10px); z-index: 200; padding: 0.5rem 0; box-shadow: 0 8px 32px rgba(139,111,71,0.12); }
-  .nav-dropdown:hover .nav-dropdown-menu, .nav-dropdown.open .nav-dropdown-menu { display: block; }
+  .nav-dropdown.open .nav-dropdown-menu { display: block; }
   .nav-dropdown-menu a { display: block; font-size: 0.65rem; letter-spacing: 0.1em; text-transform: uppercase; color: var(--text-muted); text-decoration: none; padding: 0.7rem 1.2rem; transition: background 0.2s, color 0.2s; border-left: 2px solid transparent; white-space: nowrap; }
   .nav-dropdown-menu a:hover, .nav-dropdown-menu a.active { color: var(--accent); background: var(--bg2); border-left-color: var(--accent-light); }
   .nav-hamburger { display:none; flex-direction:column; gap:5px; cursor:pointer; flex-shrink:0; }
@@ -80,7 +80,7 @@
   .nav-dropdown-btn .arrow { font-size: 0.5rem; transition: transform 0.3s; }
   .nav-dropdown.open .arrow { transform: rotate(180deg); }
   .nav-dropdown-menu { display: none; position: absolute; top: calc(100% + 12px); left: 0; min-width: 200px; background: rgba(245,240,232,0.98); border: 1px solid var(--border); backdrop-filter: blur(10px); z-index: 200; padding: 0.5rem 0; box-shadow: 0 8px 32px rgba(139,111,71,0.12); }
-  .nav-dropdown:hover .nav-dropdown-menu, .nav-dropdown.open .nav-dropdown-menu { display: block; }
+  .nav-dropdown.open .nav-dropdown-menu { display: block; }
   .nav-dropdown-menu a { display: block; font-size: 0.65rem; letter-spacing: 0.1em; text-transform: uppercase; color: var(--text-muted); text-decoration: none; padding: 0.7rem 1.2rem; transition: background 0.2s, color 0.2s; border-left: 2px solid transparent; white-space: nowrap; }
   .nav-dropdown-menu a:hover, .nav-dropdown-menu a.active { color: var(--accent); background: var(--bg2); border-left-color: var(--accent-light); }
   .nav-hamburger { display:flex; }
@@ -164,28 +164,34 @@
         <p class="page-card-desc">Dinâmicas de grupo, responsabilidade, pensamento crítico e coesão.</p>
         <span class="page-card-arrow">↗</span>
       </a>
-      <a class="page-card reveal" href="pesquisas.html">
+      <a class="page-card reveal" href="diario_reflexao.html">
         <span class="page-card-num">03 —</span>
+        <div class="page-card-title">Reflexão<br>Pessoal</div>
+        <p class="page-card-desc">Síntese semestral das aprendizagens, reflexões e crescimento ao longo da unidade curricular.</p>
+        <span class="page-card-arrow">↗</span>
+      </a>
+      <a class="page-card reveal" href="pesquisas.html">
+        <span class="page-card-num">04 —</span>
         <div class="page-card-title">As Minhas<br>Pesquisas</div>
         <p class="page-card-desc">Síndrome do Impostor, Segurança Psicológica e Efeito Pigmaleão.</p>
         <span class="page-card-arrow">↗</span>
       </a>
       <a class="page-card reveal" href="lider.html">
-        <span class="page-card-num">04 —</span>
+        <span class="page-card-num">05 —</span>
         <div class="page-card-title">Projeto<br>do Líder</div>
         <p class="page-card-desc">O Líder que Sou… O Líder que Quero Ser. Análise SWOT e Plano SMART.</p>
         <span class="page-card-arrow">↗</span>
       </a>
       <a class="page-card reveal" href="o_que_levo.html">
-        <span class="page-card-num">05 —</span>
+        <span class="page-card-num">06 —</span>
         <div class="page-card-title">O Que Levo<br>Comigo</div>
         <p class="page-card-desc">Carta aberta à futura professora e os mitos que trouxe — e superei — ao longo do semestre.</p>
         <span class="page-card-arrow">↗</span>
       </a>
       <a class="page-card reveal" href="bibliografia.html">
-        <span class="page-card-num">06 —</span>
+        <span class="page-card-num">07 —</span>
         <div class="page-card-title">Bibliografia</div>
-        <p class="page-card-desc">Referências bibliográficas em formato APA e estudos relacionados.</p>
+        <p class="page-card-desc">Referências bibliográficas em formato APA.</p>
         <span class="page-card-arrow">↗</span>
       </a>
     </div>
@@ -198,6 +204,13 @@
 </footer>
 
 <script>
+function toggleDropdown(id) {
+  document.querySelectorAll('.nav-dropdown').forEach(d => { if(d.id !== id) d.classList.remove('open'); });
+  document.getElementById(id).classList.toggle('open');
+}
+document.addEventListener('click', function(e) {
+  if (!e.target.closest('.nav-dropdown')) document.querySelectorAll('.nav-dropdown').forEach(d => d.classList.remove('open'));
+});
 const observer = new IntersectionObserver((entries) => {
   entries.forEach((e, i) => { if(e.isIntersecting) setTimeout(() => e.target.classList.add('visible'), i * 80); });
 }, { threshold: 0.1 });

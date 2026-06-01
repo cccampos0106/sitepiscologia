@@ -31,7 +31,7 @@
   .nav-dropdown-btn .arrow { font-size: 0.5rem; transition: transform 0.3s; }
   .nav-dropdown.open .arrow { transform: rotate(180deg); }
   .nav-dropdown-menu { display: none; position: absolute; top: calc(100% + 12px); left: 0; min-width: 210px; background: rgba(245,240,232,0.98); border: 1px solid var(--border); backdrop-filter: blur(10px); z-index: 200; padding: 0.5rem 0; box-shadow: 0 8px 32px rgba(139,111,71,0.12); }
-  .nav-dropdown:hover .nav-dropdown-menu, .nav-dropdown.open .nav-dropdown-menu { display: block; }
+  .nav-dropdown.open .nav-dropdown-menu { display: block; }
   .nav-dropdown-menu a { display: block; font-size: 0.65rem; letter-spacing: 0.1em; text-transform: uppercase; color: var(--text-muted); text-decoration: none; padding: 0.7rem 1.2rem; transition: background 0.2s, color 0.2s; border-left: 2px solid transparent; white-space: nowrap; }
   .nav-dropdown-menu a:hover, .nav-dropdown-menu a.active { color: var(--accent); background: var(--bg2); border-left-color: var(--accent-light); }
   .nav-hamburger { display:none; flex-direction:column; gap:5px; cursor:pointer; flex-shrink:0; }
@@ -113,7 +113,7 @@
   .nav-dropdown-btn .arrow { font-size: 0.5rem; transition: transform 0.3s; }
   .nav-dropdown.open .arrow { transform: rotate(180deg); }
   .nav-dropdown-menu { display: none; position: absolute; top: calc(100% + 12px); left: 0; min-width: 200px; background: rgba(245,240,232,0.98); border: 1px solid var(--border); backdrop-filter: blur(10px); z-index: 200; padding: 0.5rem 0; box-shadow: 0 8px 32px rgba(139,111,71,0.12); }
-  .nav-dropdown:hover .nav-dropdown-menu, .nav-dropdown.open .nav-dropdown-menu { display: block; }
+  .nav-dropdown.open .nav-dropdown-menu { display: block; }
   .nav-dropdown-menu a { display: block; font-size: 0.65rem; letter-spacing: 0.1em; text-transform: uppercase; color: var(--text-muted); text-decoration: none; padding: 0.7rem 1.2rem; transition: background 0.2s, color 0.2s; border-left: 2px solid transparent; white-space: nowrap; }
   .nav-dropdown-menu a:hover, .nav-dropdown-menu a.active { color: var(--accent); background: var(--bg2); border-left-color: var(--accent-light); }
   .nav-hamburger { display:flex; cursor:pointer; }
@@ -216,6 +216,13 @@
 </footer>
 
 <script>
+function toggleDropdown(id) {
+  document.querySelectorAll('.nav-dropdown').forEach(d => { if(d.id !== id) d.classList.remove('open'); });
+  document.getElementById(id).classList.toggle('open');
+}
+document.addEventListener('click', function(e) {
+  if (!e.target.closest('.nav-dropdown')) document.querySelectorAll('.nav-dropdown').forEach(d => d.classList.remove('open'));
+});
 // Scroll reveal
 const observer = new IntersectionObserver((entries) => {
   entries.forEach((e, i) => {
